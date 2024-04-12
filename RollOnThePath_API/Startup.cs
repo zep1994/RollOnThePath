@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 using RollOnThePath_API.Data;
+using RollOnThePath_API.Services;
 using System.Text;
 
 namespace RollOnThePath_API
@@ -25,6 +26,12 @@ namespace RollOnThePath_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+            // Register IHttpContextAccessor
+            services.AddHttpContextAccessor();
+            services.AddScoped<IUserService, UserService>();
+            // Register IUserService and UserService
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAuthentication(options =>

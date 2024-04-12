@@ -24,23 +24,23 @@ namespace RollOnThePath_API.Models
         [StringLength(50)]
         public string LastName { get; set; }
 
-        public bool? IsAdmin { get; set; }
+        public bool? IsAdmin { get; set; } = false;
 
-        public bool? IsCoach { get; set; }
+        public bool? IsCoach { get; set; } = false;
 
         public string? BeltRank { get; set; }
 
-        public int? NumberOfStripes { get; set; }
+        public int? NumberOfStripes { get; set; } = 0;
 
-        public int? TimeInTraining { get; set; } 
+        public int? TimeInTraining { get; set; } = 0;
 
-        public List<string>? FavoriteTrainingDays { get; set; }
+        public List<string>? FavoriteTrainingDays { get; set; } = new List<string>();
 
-        public string? Team { get; set; }
+        public string? Team { get; set; } = string.Empty;
 
-        public string? Gym { get; set; }
+        public string? Gym { get; set; } = string.Empty;
 
-        public List<string>? Coaches { get; set; }
+        public List<string>? Coaches { get; set; } = new List<string>();
 
         public ICollection<Competition>? Competitions { get; set; }
         public ICollection<Match>? Matches { get; set; }

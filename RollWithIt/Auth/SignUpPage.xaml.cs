@@ -47,7 +47,7 @@ namespace RollWithIt.Auth;
             {
                 // Handle successful sign-in
                 // For example, navigate to home page
-                await Navigation.PushAsync(new HomePage());
+                await Navigation.PushAsync(new LoginPage());
             }
             else
             {
