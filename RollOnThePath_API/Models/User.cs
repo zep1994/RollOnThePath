@@ -42,7 +42,7 @@ namespace RollOnThePath_API.Models
 
         public List<string>? Coaches { get; set; }
 
-        // Navigation property for competitions associated with this user
         public ICollection<Competition> Competitions { get; set; }
+        public ICollection<Match> Matches { get; set; }
     }
 }

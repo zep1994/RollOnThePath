@@ -23,5 +23,8 @@ namespace RollOnThePath_API.Models
         // Foreign key
         public int UserId { get; set; }
         public User? User { get; set; }
+
+        public ICollection<Match> Matches { get; set; }
+
     }
 }
