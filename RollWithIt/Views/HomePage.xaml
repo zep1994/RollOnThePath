@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RollWithIt.Views.HomePage"
+             Title="HomePage">
+    <StackLayout Padding="20">
+        <Label Text="Welcome to the Home Page!" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,20,0,40" />
+
+        <!-- Display user data -->
+        <Label Text="{Binding UserData}" FontSize="18" />
+    </StackLayout>
+</ContentPage>
