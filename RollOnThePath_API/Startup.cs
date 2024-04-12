@@ -62,8 +62,8 @@ namespace RollOnThePath_API
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-
+            //app.UseHttpsRedirection();
+            
             app.UseRouting();
 
             app.UseAuthentication();

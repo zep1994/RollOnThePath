@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RollWithIt.Auth.SignUpPage"
+             xmlns:local="clr-namespace:RollWithIt.Auth"
+             Title="SignUpPage">
+    
+    <StackLayout Padding="20">
+        <Entry x:Name="UsernameEntry" Placeholder="Username" />
+        <Entry x:Name="EmailEntry" Placeholder="Email" />
+        <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
+        <Entry x:Name="FirstNameEntry" Placeholder="First Name" />
+        <Entry x:Name="LastNameEntry" Placeholder="Last Name" />
+        <Entry x:Name="BeltRankEntry" Placeholder="Belt Rank" />
+        
+        <Button Text="Sign Up" Clicked="OnSignInClicked" />
+    </StackLayout>
+</ContentPage>
