@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RollOnThePath_API.Data;
@@ -12,9 +13,11 @@ using RollOnThePath_API.Data;
 namespace RollOnThePath_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240412101425_UserComps")]
+    partial class UserComps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,6 +35,7 @@ namespace RollOnThePath_API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("DateTime")
+                        .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Location")
@@ -58,42 +62,6 @@ namespace RollOnThePath_API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Competitions");
-                });
-
-            modelBuilder.Entity("RollOnThePath_API.Models.Match", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("BeltRanking")
-                        .HasColumnType("text");
-
-                    b.Property<int>("CompetitionId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Gameplan")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PostMatchNotes")
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("WeightDivision")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompetitionId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Matches");
                 });
 
             modelBuilder.Entity("RollOnThePath_API.Models.Move", b =>
@@ -214,35 +182,9 @@ namespace RollOnThePath_API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RollOnThePath_API.Models.Match", b =>
-                {
-                    b.HasOne("RollOnThePath_API.Models.Competition", "Competition")
-                        .WithMany("Matches")
-                        .HasForeignKey("CompetitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RollOnThePath_API.Models.User", "User")
-                        .WithMany("Matches")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Competition");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("RollOnThePath_API.Models.Competition", b =>
-                {
-                    b.Navigation("Matches");
-                });
-
             modelBuilder.Entity("RollOnThePath_API.Models.User", b =>
                 {
                     b.Navigation("Competitions");
-
-                    b.Navigation("Matches");
                 });
 #pragma warning restore 612, 618
         }
