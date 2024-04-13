@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RollOnThePath_API.Models.Lessons;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 
 namespace RollOnThePath_API.Models
@@ -44,5 +45,7 @@ namespace RollOnThePath_API.Models
 
         public ICollection<Competition>? Competitions { get; set; }
         public ICollection<Match>? Matches { get; set; }
+
+        public ICollection<Lesson>? Lessons { get; set; }
     }
 }

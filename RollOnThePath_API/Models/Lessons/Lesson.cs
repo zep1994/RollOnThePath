@@ -8,6 +8,8 @@
         public string? BeltRecommendation { get; set; }
         public string? Difficulty { get; set; }
         public bool? IsCompleted { get; set; }
+        public int UserId { get; set; }
+        public User? User { get; set; }
 
         // Navigation property for related sections
         public List<LessonSection>? Sections { get; set; }

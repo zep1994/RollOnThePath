@@ -31,9 +31,16 @@ namespace RollOnThePath_API.Data
             .WithOne(m => m.Competition)  // Use the navigation property here
             .HasForeignKey(m => m.CompetitionId);
 
+            modelBuilder.Entity<Lesson>()
+                .HasOne(l => l.User)            // Each lesson is owned by one user
+                .WithMany(u => u.Lessons)      // Each user can have multiple lessons
+                .HasForeignKey(l => l.UserId)  // Define the foreign key
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
             base.OnModelCreating(modelBuilder);
 
         }
     }
 }
-

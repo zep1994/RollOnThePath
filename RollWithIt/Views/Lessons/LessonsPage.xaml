@@ -1,7 +1,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:RollWithIt.ViewModels"
-             xmlns:views="clr-namespace:RollWithIt.Views.Lessons"
              x:Class="RollWithIt.Views.Lessons.LessonsPage"
              Title="LessonsPage"
              x:DataType="viewModels:LessonViewModel">
@@ -18,11 +17,11 @@
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <StackLayout>
-                                            <!-- Make the section clickable -->
-                                            <Button Text="{Binding Title}"
-                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type views:LessonsPage}}, Path=BindingContext.SectionCommand}"
-                                                    CommandParameter="{Binding .}"/>
+                                            <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold"/>
                                             <Label Text="{Binding Description}" FontSize="16"/>
+                                            <!-- Use a Button to navigate to ShowSubLesson -->
+                                            <Button Text="View SubLessons" Clicked="OnSectionButtonClicked"
+                                                    CommandParameter="{Binding .}" />
                                         </StackLayout>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
@@ -31,6 +30,10 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <!-- Add TapGestureRecognizer to the parent layout -->
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ShowSectionCommand}" />
+            </StackLayout.GestureRecognizers>
         </StackLayout>
     </ScrollView>
 </ContentPage>
