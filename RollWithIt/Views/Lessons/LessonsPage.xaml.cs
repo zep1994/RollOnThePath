@@ -1,9 +1,24 @@
-namespace RollWithIt.Views.Lessons;
+using RollWithIt.ViewModels;
+using RollWithIt.Models;
 
-public partial class LessonsPage : ContentPage
+
+namespace RollWithIt.Views.Lessons
 {
-	public LessonsPage()
-	{
-		InitializeComponent();
-	}
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class LessonsPage : ContentPage
+    {
+        public LessonsPage()
+        {
+            InitializeComponent();
+            BindingContext = new LessonViewModel();
+        }
+
+        // Handle the click event of the section button
+        private async void OnSectionButtonClicked(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            LessonSection section = (LessonSection)button.BindingContext;
+            await Navigation.PushAsync(new SectionShowPage(section));
+        }
+    }
 }

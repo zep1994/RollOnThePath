@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace RollWithIt.Models
 {
-    public class Lesson
+    public class SubLesson
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public List<LessonSection> Sections { get; set; }
-        public string BeltRecommendation { get; set; }
+        public string Content { get; set; }
     }
 }

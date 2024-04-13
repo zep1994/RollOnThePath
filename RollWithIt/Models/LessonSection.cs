@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace RollWithIt.Models
 {
-    public class Lesson
+    public class LessonSection
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public List<LessonSection> Sections { get; set; }
-        public string BeltRecommendation { get; set; }
+        public List<SubLesson> SubLessons { get; set; }
+        public string SectionTitle => Title;
+
+        // Add the IsExpanded property
+        public bool IsExpanded { get; set; }
     }
 }

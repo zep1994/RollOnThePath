@@ -1,0 +1,19 @@
+<!-- SectionShowPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RollWithIt.Views.Lessons.SectionShowPage"
+             Title="Section">
+    <StackLayout Padding="20">
+        <CollectionView ItemsSource="{Binding SubLessons}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold"/>
+                        <Label Text="{Binding Description}" FontSize="14"/>
+                        <Label Text="{Binding Content}" FontSize="12"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

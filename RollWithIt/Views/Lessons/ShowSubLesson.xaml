@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RollWithIt.Views.Lessons.ShowSubLesson"
+             Title="{Binding Title}">
+
+    <StackLayout Padding="20">
+        <!-- Title -->
+        <Label Text="{Binding Title}"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"/>
+
+        <!-- Description -->
+        <Label Text="{Binding Description}"
+               FontSize="18"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"/>
+
+        <!-- Large Text Area -->
+        <Editor Text="{Binding Content}"
+                FontSize="16"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Margin="10"/>
+
+        <!-- Add more labels or controls to display additional details of the sub-lesson -->
+    </StackLayout>
+</ContentPage>

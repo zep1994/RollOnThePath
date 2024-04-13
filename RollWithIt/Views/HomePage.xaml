@@ -5,16 +5,9 @@
              Title="HomePage">
     <StackLayout Padding="20">
 
-        <!-- User Profile -->
         <Button Text="User Profile" Clicked="UserProfile_Clicked" />
-
-        <!-- Lessons -->
         <Button Text="Lessons" Clicked="Lessons_Clicked" />
-
-        <!-- Progression -->
         <Button Text="Progression" Clicked="Progression_Clicked" />
-
-        <!-- Logout -->
         <Button Text="Logout" Clicked="Logout_Clicked" />
 
     </StackLayout>
