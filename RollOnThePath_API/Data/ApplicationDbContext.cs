@@ -37,10 +37,6 @@ namespace RollOnThePath_API.Data
                 .HasForeignKey(l => l.UserId)  // Define the foreign key
                 .OnDelete(DeleteBehavior.Restrict);
 
-
-
-            base.OnModelCreating(modelBuilder);
-
-        }
+        }       
     }
 }

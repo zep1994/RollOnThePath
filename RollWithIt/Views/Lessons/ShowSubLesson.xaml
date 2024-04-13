@@ -25,6 +25,5 @@
                 VerticalOptions="FillAndExpand"
                 Margin="10"/>
 
-        <!-- Add more labels or controls to display additional details of the sub-lesson -->
     </StackLayout>
 </ContentPage>

@@ -10,18 +10,12 @@ namespace RollOnThePath_API.Controllers
 {
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController : ControllerBase
+public class AuthController(IConfiguration config, ApplicationDbContext dbContext) : ControllerBase
 {
-    private readonly IConfiguration _config;
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IConfiguration _config = config;
+    private readonly ApplicationDbContext _dbContext = dbContext;
 
-    public AuthController(IConfiguration config, ApplicationDbContext dbContext)
-    {
-        _config = config;
-        _dbContext = dbContext;
-    }
-
-    [HttpPost("signup")]
+        [HttpPost("signup")]
     public async Task<IActionResult> SignUp(User user)
     {
         // Hash the password before storing
@@ -37,7 +31,7 @@ public class AuthController : ControllerBase
         public IActionResult Login(UserLogin userLoginRequest)
         {
             var existingUser = _dbContext.Users.SingleOrDefault(u =>
-                (u.Username == userLoginRequest.Username || u.Email == userLoginRequest.Username));
+                u.Username == userLoginRequest.Username || u.Email == userLoginRequest.Username);
 
             if (existingUser == null || !BCrypt.Net.BCrypt.Verify(userLoginRequest.Password, existingUser.Password))
             {
@@ -58,15 +52,18 @@ public class AuthController : ControllerBase
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.Username)
+            new Claim(ClaimTypes.Name, user.Username.ToString()),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.GivenName, user.FirstName),
+            new Claim(ClaimTypes.Surname, user.FirstName)
         };
 
-        var token = new JwtSecurityToken(
-            issuer: _config["Jwt:Issuer"],
-            audience: _config["Jwt:Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(1),
-            signingCredentials: credentials
+            var token = new JwtSecurityToken(
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: credentials
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);

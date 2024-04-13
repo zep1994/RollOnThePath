@@ -6,24 +6,25 @@ namespace RollOnThePath_API.Models
 {
     public class User
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string Username { get; set; }
+        public required string? Username { get; set; }
 
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public required string? Email { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public required string? Password { get; set; }
 
         [StringLength(50)]
-        public string FirstName { get; set; }
+        public required string? FirstName { get; set; }
 
         [StringLength(50)]
-        public string LastName { get; set; }
+        public required string LastName { get; set; }
 
         public bool? IsAdmin { get; set; } = false;
 
@@ -35,13 +36,13 @@ namespace RollOnThePath_API.Models
 
         public int? TimeInTraining { get; set; } = 0;
 
-        public List<string>? FavoriteTrainingDays { get; set; } = new List<string>();
+        public List<string>? FavoriteTrainingDays { get; set; } = [];
 
         public string? Team { get; set; } = string.Empty;
 
         public string? Gym { get; set; } = string.Empty;
 
-        public List<string>? Coaches { get; set; } = new List<string>();
+        public List<string>? Coaches { get; set; } = [];
 
         public ICollection<Competition>? Competitions { get; set; }
         public ICollection<Match>? Matches { get; set; }

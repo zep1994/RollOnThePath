@@ -9,12 +9,11 @@ namespace RollWithIt.ViewModels
 {
     public class LessonViewModel : INotifyPropertyChanged
     {
-
         // Command to show section details
         public ICommand ShowSectionCommand { get; }
 
-        private List<Lesson> _lessons;
-        public List<Lesson> Lessons
+        private List<Lesson>? _lessons;
+        public List<Lesson>? Lessons
         {
             get => _lessons;
             set
@@ -25,8 +24,8 @@ namespace RollWithIt.ViewModels
         }
 
         // Add Title property
-        private string _title;
-        public string Title
+        private string? _title;
+        public string? Title
         {
             get => _title;
             set
@@ -36,8 +35,8 @@ namespace RollWithIt.ViewModels
             }
         }
 
-        private string _description;
-        public string Description
+        private string? _description;
+        public string? Description
         {
             get => _description;
             set
@@ -47,8 +46,8 @@ namespace RollWithIt.ViewModels
             }
         }
 
-        private string _beltrecommendation;
-        public string BeltRecommendation
+        private string? _beltrecommendation;
+        public string? BeltRecommendation
         {
             get => _beltrecommendation;
             set
@@ -58,8 +57,8 @@ namespace RollWithIt.ViewModels
             }
         }
 
-        private string _content;
-        public string Content
+        private string? _content;
+        public string? Content
         {
             get => _content;
             set
@@ -70,8 +69,8 @@ namespace RollWithIt.ViewModels
         }
 
         // Add Sections property
-        private List<LessonSection> _sections;
-        public List<LessonSection> Sections
+        private List<LessonSection>? _sections;
+        public List<LessonSection>? Sections
         {
             get => _sections;
             set
@@ -81,9 +80,9 @@ namespace RollWithIt.ViewModels
             }
         }
 
-        private ICommand _sectionCommand;
+        private ICommand? _sectionCommand;
 
-        public ICommand SectionCommand
+        public ICommand? SectionCommand
         {
             get => _sectionCommand;
             set
@@ -98,29 +97,26 @@ namespace RollWithIt.ViewModels
             SectionCommand = new Command<LessonSection>(ExecuteSectionCommand);
 
             // Initialize your lessons data here
-            Lessons = new List<Lesson>
-            {
-                new Lesson
-                {
+            Lessons =
+            [
+                new() {
                     Title = "Lesson Title 1",
                     Description = "Lesson Description 1",
                     BeltRecommendation = "Belt Recommendation 1",
                     Sections = new List<LessonSection>
                     {
-                        new LessonSection
-                        {
+                        new() {
+                            LessonId = 1, // Set LessonId here
                             Title = "Section 1",
                             Description = "Section 1 Description",
                             SubLessons = new List<SubLesson>
                             {
-                                new SubLesson
-                                {
+                                new() {
                                     Title = "Sub-Lesson 1",
                                     Description = "Sub-Lesson 1 Description",
                                     Content = "Sub-Lesson 1 Content"
                                 },
-                                new SubLesson
-                                {
+                                new() {
                                     Title = "Sub-Lesson 2",
                                     Description = "Sub-Lesson 2 Description",
                                     Content = "Sub-Lesson 2 Content"
@@ -129,39 +125,36 @@ namespace RollWithIt.ViewModels
                         }
                     }
                 },
-                new Lesson
-                {
+                new() {
                     Title = "Lesson Title 2",
                     Description = "Lesson Description 2",
                     BeltRecommendation = "Belt Recommendation 2",
                     Sections = new List<LessonSection>
                     {
-                        new LessonSection
-                        {
+                        new() {
+                            LessonId = 2, // Set LessonId here
                             Title = "Section 1",
                             Description = "Section 1 Description",
                             SubLessons = new List<SubLesson>
                             {
-                                new SubLesson
-                                {
+                                new() {
                                     Title = "Sub-Lesson 1",
                                     Description = "Sub-Lesson 1 Description",
                                     Content = "Sub-Lesson 1 Content"
                                 },
-                                new SubLesson
-                                {
+                                new() {
                                     Title = "Sub-Lesson 2",
                                     Description = "Sub-Lesson 2 Description",
                                     Content = "Sub-Lesson 2 Content"
                                 }
                             }
                         },
-                        new LessonSection
-                        {
+                        new() {
+                            LessonId = 2, // Set LessonId here
                             Title = "Section 2",
                             Description = "Section 2 Description",
-                            SubLessons = new List<SubLesson>
-                            {
+                            SubLessons =
+                            [
                                 new SubLesson
                                 {
                                     Title = "Sub-Lesson 3",
@@ -174,11 +167,11 @@ namespace RollWithIt.ViewModels
                                     Description = "Sub-Lesson 4 Description",
                                     Content = "Sub-Lesson 4 Content"
                                 }
-                            }
+                            ]
                         }
                     }
                 }
-            };
+            ];
         }
 
         // Add SubLessons property
@@ -195,7 +188,7 @@ namespace RollWithIt.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

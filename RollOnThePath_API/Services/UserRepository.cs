@@ -7,21 +7,16 @@ using RollOnThePath_API.Models;
 
 namespace RollOnThePath_API.Services
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository(ApplicationDbContext dbContext) : IUserRepository
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext = dbContext;
 
-        public UserRepository(ApplicationDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
-        public async Task<UserInfo> GetUserInfo(string userId)
+        public async Task<UserInfo> GetUserInfo(string Id)
         {
             // Implement your logic to fetch user info from the database based on userId
             // For demonstration purposes, let's assume you have a User entity in your DbContext
 
-            var user = await _dbContext.Users.FindAsync(userId);
+            var user = await _dbContext.Users.FindAsync(Id);
 
             if (user == null)
             {
@@ -36,7 +31,6 @@ namespace RollOnThePath_API.Services
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                BeltRank = user.BeltRank
             };
 
             return userInfo;

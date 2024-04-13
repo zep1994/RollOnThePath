@@ -14,14 +14,9 @@ namespace RollOnThePath_API.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class MovesController : ControllerBase
+    public class MovesController(ApplicationDbContext context) : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
-        public MovesController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        private readonly ApplicationDbContext _context = context;
 
         // GET: api/Moves
         [HttpGet]

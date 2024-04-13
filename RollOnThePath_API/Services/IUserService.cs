@@ -4,6 +4,6 @@ namespace RollOnThePath_API.Services
 {
     public interface IUserService
     {
-        Task<UserInfo> GetUserInfoAsync(string userId);
+        Task<UserInfo> GetUserInfoAsync(string Id);
     }
 }

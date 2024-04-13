@@ -8,13 +8,13 @@ namespace RollWithIt.Models
 {
     public class LessonSection
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public required string Title { get; set; }
+        public required string Description { get; set; }
         public bool? IsCompleted { get; set; }
         public string? Focus { get; set; }
 
         // Foreign key property
-        public int LessonId { get; set; }
+        public required int LessonId { get; set; }
 
         // Navigation property for the related lesson
         public Lesson? Lesson { get; set; }

@@ -48,13 +48,10 @@ public partial class UserProfile : ContentPage
                     // Check if deserialization was successful
                     if (_userInfo != null)
                     {
-                        // Bind _userInfo to UI elements
                         usernameLabel.Text = _userInfo.Username;
                         emailLabel.Text = _userInfo.Email;
                         firstNameLabel.Text = _userInfo.FirstName;
                         lastNameLabel.Text = _userInfo.LastName;
-                        beltRankLabel.Text = _userInfo.BeltRank;
-                        // Bind other properties as needed
                     }
                     else
                     {

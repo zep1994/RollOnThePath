@@ -17,9 +17,6 @@
         <Label Text="Last Name:" />
         <Label x:Name="lastNameLabel" TextColor="Red"/>
 
-        <Label Text="Belt Rank:" />
-        <Label x:Name="beltRankLabel" TextColor="Red" />
-
         <Label x:Name="ErrorMessageLabel" Text="" TextColor="Red" />
     </StackLayout>
 </ContentPage>

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RollOnThePath_API.Models;
 
 namespace RollOnThePath_API.Services
@@ -32,8 +33,14 @@ namespace RollOnThePath_API.Services
 
                 // Deserialize JSON response to UserInfo object
                 var userInfo = JsonConvert.DeserializeObject<UserInfo>(responseBody);
+                if (userInfo != null)
+                {
+                    return userInfo;
+                } else
+                {
+                    return null;
+                }
 
-                return userInfo;
             }
             catch (HttpRequestException ex)
             {
