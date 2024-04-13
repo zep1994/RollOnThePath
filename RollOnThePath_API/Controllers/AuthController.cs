@@ -55,7 +55,7 @@ public class AuthController(IConfiguration config, ApplicationDbContext dbContex
             new Claim(ClaimTypes.Name, user.Username.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.GivenName, user.FirstName),
-            new Claim(ClaimTypes.Surname, user.FirstName)
+            new Claim(ClaimTypes.Surname, user.LastName)
         };
 
             var token = new JwtSecurityToken(

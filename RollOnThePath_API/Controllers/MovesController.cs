@@ -107,6 +107,7 @@ namespace RollOnThePath_API.Controllers
             // Retrieve the logged-in user's id from claims
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            if (userId == null) { return NotFound(); }
             // Retrieve the user's information from the database
             var user = _context.Users.FirstOrDefault(u => u.Id == int.Parse(userId));
 

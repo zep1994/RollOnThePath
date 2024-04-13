@@ -103,14 +103,14 @@ namespace RollWithIt.ViewModels
                     Title = "Lesson Title 1",
                     Description = "Lesson Description 1",
                     BeltRecommendation = "Belt Recommendation 1",
-                    Sections = new List<LessonSection>
-                    {
+                    Sections =
+                    [
                         new() {
                             LessonId = 1, // Set LessonId here
                             Title = "Section 1",
                             Description = "Section 1 Description",
-                            SubLessons = new List<SubLesson>
-                            {
+                            SubLessons =
+                            [
                                 new() {
                                     Title = "Sub-Lesson 1",
                                     Description = "Sub-Lesson 1 Description",
@@ -121,16 +121,16 @@ namespace RollWithIt.ViewModels
                                     Description = "Sub-Lesson 2 Description",
                                     Content = "Sub-Lesson 2 Content"
                                 }
-                            }
+                            ]
                         }
-                    }
+                    ]
                 },
                 new() {
                     Title = "Lesson Title 2",
                     Description = "Lesson Description 2",
                     BeltRecommendation = "Belt Recommendation 2",
-                    Sections = new List<LessonSection>
-                    {
+                    Sections =
+                    [
                         new() {
                             LessonId = 2, // Set LessonId here
                             Title = "Section 1",
@@ -169,7 +169,7 @@ namespace RollWithIt.ViewModels
                                 }
                             ]
                         }
-                    }
+                    ]
                 }
             ];
         }
@@ -197,8 +197,15 @@ namespace RollWithIt.ViewModels
         {
             if (section.SubLessons != null && section.SubLessons.Count > 0)
             {
-                // Pass the first sub-lesson to the ShowSubLesson page
-                await Application.Current.MainPage.Navigation.PushAsync(new ShowSubLesson(section.SubLessons[0]));
+                if (Application.Current.MainPage != null && Application.Current.MainPage.Navigation != null)
+                {
+                    await Application.Current.MainPage.Navigation.PushAsync(new ShowSubLesson(section.SubLessons[0]));
+                }
+                else
+                {
+                    // Handle the case where Application.Current.MainPage or Application.Current.MainPage.Navigation is null
+                    // You might want to log this or display an error message to the user
+                }
             }
             else
             {

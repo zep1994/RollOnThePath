@@ -2,8 +2,8 @@
 {
     public class LessonSection
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
+        public required int Id { get; set; }
+        public required string Title { get; set; }
         public string? Description { get; set; }
         public bool? IsCompleted { get; set; }
         public string? Focus { get; set; }

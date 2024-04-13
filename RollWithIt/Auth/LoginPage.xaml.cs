@@ -74,6 +74,6 @@ public partial class LoginPage : ContentPage
     // Define a class to represent the token response from the API
     public class TokenResponse
     {
-        public string? token { get; set; }
+        public required string token { get; set; }
     }
 }
