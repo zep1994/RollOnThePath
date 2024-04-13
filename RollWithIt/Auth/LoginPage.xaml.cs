@@ -49,11 +49,14 @@ public partial class LoginPage : ContentPage
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(jsonResponse);
 
-                // Handle the JWT token (e.g., save it to secure storage, set it as a property in App class, etc.)
-                App.JWTToken = tokenResponse.Token;
+                if (tokenResponse != null)
+                {
+                    // Handle the JWT token (e.g., save it to secure storage, set it as a property in App class, etc.)
+                    App.JWTToken = tokenResponse.token;
 
-                // Navigate to the next page (e.g., homepage)
-                await Navigation.PushAsync(new HomePage());
+                    // Navigate to the next page (e.g., homepage)
+                    await Navigation.PushAsync(new HomePage());
+                }
             }
             else
             {
@@ -71,6 +74,6 @@ public partial class LoginPage : ContentPage
     // Define a class to represent the token response from the API
     public class TokenResponse
     {
-        public string Token { get; set; }
+        public string token { get; set; }
     }
 }

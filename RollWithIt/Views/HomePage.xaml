@@ -4,9 +4,18 @@
              x:Class="RollWithIt.Views.HomePage"
              Title="HomePage">
     <StackLayout Padding="20">
-        <Label Text="Welcome to the Home Page!" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,20,0,40" />
 
-        <!-- Display user data -->
-        <Label Text="{Binding UserData}" FontSize="18" />
+        <!-- User Profile -->
+        <Button Text="User Profile" Clicked="UserProfile_Clicked" />
+
+        <!-- Lessons -->
+        <Button Text="Lessons" Clicked="Lessons_Clicked" />
+
+        <!-- Progression -->
+        <Button Text="Progression" Clicked="Progression_Clicked" />
+
+        <!-- Logout -->
+        <Button Text="Logout" Clicked="Logout_Clicked" />
+
     </StackLayout>
 </ContentPage>

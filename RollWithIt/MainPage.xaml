@@ -4,39 +4,25 @@
              xmlns:local="clr-namespace:RollWithIt.Components"
              x:Class="RollWithIt.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Grid>
-                <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
+    <StackLayout>
+
+        <Grid BackgroundColor="#2196F3" HeightRequest="50" Padding="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Text="Login" Clicked="OnLoginClicked" HorizontalOptions="End" VerticalOptions="Center" TextColor="White" />
+            <Button Text="Sign Up" Clicked="OnSignUpClicked" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White" />
+        </Grid>
+
+        <!-- Placeholder Text -->
+        <Label Text="Roll With It" FontSize="Large" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+    </StackLayout>
+</ContentPage>
     
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
-
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-
-           
-                <!-- Your main content here -->
-
-                <!-- Sliding sidebar menu -->
-                <AbsoluteLayout HorizontalOptions="Start" VerticalOptions="FillAndExpand">
+    
+<!-- Sliding sidebar menu -->
+<!--<AbsoluteLayout HorizontalOptions="Start" VerticalOptions="FillAndExpand">
                     <local:SlidingSidebarMenu AbsoluteLayout.LayoutBounds="0,0,0.8,1"
                                       AbsoluteLayout.LayoutFlags="All" />
-                </AbsoluteLayout>
-            </Grid>
-
-        </VerticalStackLayout>
-    </ScrollView>
-
-</ContentPage>
+                </AbsoluteLayout>-->
