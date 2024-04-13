@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RollOnThePath_API.Data;
 using RollOnThePath_API.Models.Lessons;
 
 namespace RollOnThePath_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LessonsController(ApplicationDbContext context) : ControllerBase
