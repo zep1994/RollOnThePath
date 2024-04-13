@@ -12,5 +12,7 @@ namespace RollWithIt.Models
         public string Description { get; set; }
         public List<LessonSection> Sections { get; set; }
         public string BeltRecommendation { get; set; }
+        public string? Difficulty { get; set; }
+        public bool? IsCompleted { get; set; }
     }
 }

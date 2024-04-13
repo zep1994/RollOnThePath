@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RollOnThePath_API.Models;
+using RollOnThePath_API.Models.Lessons;
 
 
 namespace RollOnThePath_API.Data
@@ -14,6 +15,9 @@ namespace RollOnThePath_API.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Competition> Competitions { get; set; }
         public DbSet<Match> Matches { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<LessonSection> LessonSections { get; set; }
+        public DbSet<SubLesson> SubLessons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

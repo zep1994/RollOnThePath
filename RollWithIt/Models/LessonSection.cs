@@ -10,10 +10,19 @@ namespace RollWithIt.Models
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public List<SubLesson> SubLessons { get; set; }
-        public string SectionTitle => Title;
+        public bool? IsCompleted { get; set; }
+        public string? Focus { get; set; }
+
+        // Foreign key property
+        public int LessonId { get; set; }
+
+        // Navigation property for the related lesson
+        public Lesson? Lesson { get; set; }
+
+        // Navigation property for related sub-lessons
+        public List<SubLesson>? SubLessons { get; set; }
 
         // Add the IsExpanded property
-        public bool IsExpanded { get; set; }
+        public bool? IsExpanded { get; set; }
     }
 }
