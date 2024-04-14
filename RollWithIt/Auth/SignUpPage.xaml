@@ -1,18 +1,22 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RollWithIt.Auth.SignUpPage"
              xmlns:local="clr-namespace:RollWithIt.Auth"
+             x:Class="RollWithIt.Auth.SignUpPage"
              Title="SignUpPage">
-    
-    <StackLayout Padding="20">
-        <Entry x:Name="UsernameEntry" Placeholder="Username" />
-        <Entry x:Name="EmailEntry" Placeholder="Email" />
-        <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
-        <Entry x:Name="FirstNameEntry" Placeholder="First Name" />
-        <Entry x:Name="LastNameEntry" Placeholder="Last Name" />
-        <Entry x:Name="BeltRankEntry" Placeholder="Belt Rank" />
-        
-        <Button Text="Sign Up" Clicked="OnSignInClicked" />
-    </StackLayout>
+
+    <ScrollView>
+        <StackLayout Padding="20">
+            <Frame Padding="20" Margin="0,50,0,50" BackgroundColor="#F5F5F5">
+                <StackLayout Spacing="20">
+                    <Entry x:Name="UsernameEntry" Placeholder="Username" BackgroundColor="#EEEEEE" TextColor="#333333" FontSize="18" />
+                    <Entry x:Name="EmailEntry" Placeholder="Email" BackgroundColor="#EEEEEE" TextColor="#333333" FontSize="18" />
+                    <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" BackgroundColor="#EEEEEE" TextColor="#333333" FontSize="18" />
+                    <Entry x:Name="FirstNameEntry" Placeholder="First Name" BackgroundColor="#EEEEEE" TextColor="#333333" FontSize="18" />
+                    <Entry x:Name="LastNameEntry" Placeholder="Last Name" BackgroundColor="#EEEEEE" TextColor="#333333" FontSize="18" />
+                    <Entry x:Name="BeltRankEntry" Placeholder="Belt Rank" BackgroundColor="#EEEEEE" TextColor="#333333" FontSize="18" />
+                    <Button Text="Sign Up" Clicked="OnSignInClicked" BackgroundColor="#007BFF" TextColor="White" FontSize="18" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

@@ -1,24 +1,51 @@
-using RollWithIt.ViewModels;
+
 using RollWithIt.Models;
+using Microsoft.Maui.Controls;
 
 
 namespace RollWithIt.Views.Lessons
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LessonsPage : ContentPage
     {
         public LessonsPage()
         {
             InitializeComponent();
-            BindingContext = new LessonViewModel();
         }
 
-        // Handle the click event of the section button
-        private async void OnSectionButtonClicked(object sender, EventArgs e)
+        private async Task LoadLessons()
         {
-            Button button = (Button)sender;
-            LessonSection section = (LessonSection)button.BindingContext;
-            await Navigation.PushAsync(new SectionShowPage(section));
+            try
+            {
+                HttpClient client = new HttpClient();
+
+                // Assuming you have a method to retrieve the JWT token from your app
+                string token = GetJwtToken();
+
+                // Add JWT token to the request headers
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+                HttpResponseMessage response = await client.GetAsync("http://localhost:5000/api/lessons");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<Lesson>? Lessons = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Lesson>>(content);
+                    BindingContext = this;
+                }
+                else
+                {
+                    // Handle error
+                }
+            }
+            catch (HttpRequestException)
+            {
+                // Handle network error
+            }
+        }
+
+        private string GetJwtToken()
+        {
+            throw new NotImplementedException();
         }
     }
 }

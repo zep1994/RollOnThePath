@@ -29,8 +29,7 @@ namespace RollWithIt.Auth;
             Email = EmailEntry.Text,
             Password = PasswordEntry.Text,
             FirstName = FirstNameEntry.Text,
-            LastName = LastNameEntry.Text,
-            BeltRank = BeltRankEntry.Text
+            LastName = LastNameEntry.Text
         };
 
         if (string.IsNullOrEmpty(UsernameEntry.Text) || string.IsNullOrEmpty(PasswordEntry.Text))

@@ -11,7 +11,7 @@ namespace RollWithIt.Models
     public class UserInfo
     {
         [JsonPropertyName("username")]
-        public string? Username { get; set; }
+        public required string Username { get; set; }
 
         [JsonPropertyName("email")]
         public string? Email { get; set; }

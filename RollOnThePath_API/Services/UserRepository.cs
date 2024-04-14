@@ -11,29 +11,21 @@ namespace RollOnThePath_API.Services
     {
         private readonly ApplicationDbContext _dbContext = dbContext;
 
-        public async Task<UserInfo> GetUserInfo(string Id)
+        public async Task<UserInfo> GetUserInfo(string id)
         {
-            // Implement your logic to fetch user info from the database based on userId
-            // For demonstration purposes, let's assume you have a User entity in your DbContext
+            var user = await _dbContext.Users.FindAsync(id);
+            if (user == null) { throw new ArgumentNullException("user"); }
 
-            var user = await _dbContext.Users.FindAsync(Id);
-
-            if (user == null)
-            {
-                // User not found
-                return null;
-            }
-
-            // Map User entity to UserInfo object
             var userInfo = new UserInfo
             {
-                Username = user.Username,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+                Username = user?.Username ?? "Not Found",
+                Email = user?.Email ?? "Not Found",
+                FirstName = user?.FirstName ?? "Not Found",
+                LastName = user?.LastName ?? "Not Found",
             };
 
             return userInfo;
+
         }
     }
 }

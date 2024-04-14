@@ -18,24 +18,28 @@ namespace RollOnThePath_API.Data
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<LessonSection> LessonSections { get; set; }
         public DbSet<SubLesson> SubLessons { get; set; }
+        public DbSet<LessonSection> Sections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Define relationships
             modelBuilder.Entity<User>()
-            .HasMany(u => u.Competitions)
-            .WithOne(c => c.User)
-            .HasForeignKey(c => c.UserId);
-
-            modelBuilder.Entity<Competition>()
-            .HasMany(c => c.Matches)
-            .WithOne(m => m.Competition)  // Use the navigation property here
-            .HasForeignKey(m => m.CompetitionId);
+                .HasMany(u => u.Lessons)
+                .WithOne(l => l.User)
+                .HasForeignKey(l => l.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Lesson>()
-                .HasOne(l => l.User)            // Each lesson is owned by one user
-                .WithMany(u => u.Lessons)      // Each user can have multiple lessons
-                .HasForeignKey(l => l.UserId)  // Define the foreign key
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasMany(l => l.Sections)
+                .WithOne(ls => ls.Lesson)
+                .HasForeignKey(ls => ls.LessonId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<LessonSection>()
+                .HasMany(ls => ls.SubLessons)
+                .WithOne(sl => sl.LessonSection)
+                .HasForeignKey(sl => sl.LessonSectionId)
+                .OnDelete(DeleteBehavior.Cascade);
 
         }       
     }

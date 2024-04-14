@@ -6,12 +6,17 @@ using RollOnThePath_API.Models.Lessons;
 
 namespace RollOnThePath_API.Controllers
 {
-    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
-    public class LessonsController(ApplicationDbContext context) : ControllerBase
+    public class LessonsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context = context;
+        private readonly ApplicationDbContext _context;
+
+        public LessonsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         // GET: api/Lessons
         [HttpGet]
@@ -41,12 +46,12 @@ namespace RollOnThePath_API.Controllers
             _context.Lessons.Add(lesson);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLesson", new { id = lesson.Id }, lesson);
+            return CreatedAtAction(nameof(GetLesson), new { id = lesson.Id }, lesson);
         }
 
         // PUT: api/Lessons/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditLesson(int id, Lesson lesson)
+        public async Task<IActionResult> PutLesson(int id, Lesson lesson)
         {
             if (id != lesson.Id)
             {
@@ -54,16 +59,6 @@ namespace RollOnThePath_API.Controllers
             }
 
             _context.Entry(lesson).State = EntityState.Modified;
-
-            foreach (var section in lesson.Sections)
-            {
-                _context.Entry(section).State = EntityState.Modified;
-
-                foreach (var subLesson in section.SubLessons)
-                {
-                    _context.Entry(subLesson).State = EntityState.Modified;
-                }
-            }
 
             try
             {
@@ -80,6 +75,22 @@ namespace RollOnThePath_API.Controllers
                     throw;
                 }
             }
+
+            return NoContent();
+        }
+
+        // DELETE: api/Lessons/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteLesson(int id)
+        {
+            var lesson = await _context.Lessons.FindAsync(id);
+            if (lesson == null)
+            {
+                return NotFound();
+            }
+
+            _context.Lessons.Remove(lesson);
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }

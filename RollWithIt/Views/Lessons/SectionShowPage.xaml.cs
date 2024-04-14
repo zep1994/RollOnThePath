@@ -1,13 +1,14 @@
-using RollWithIt.Models;
+using Microsoft.Maui.Controls;
+using RollWithIt.ViewModels;
 
-namespace RollWithIt.Views.Lessons;
-
-[XamlCompilation(XamlCompilationOptions.Compile)]
-public partial class SectionShowPage : ContentPage
+namespace RollWithIt.Views.Lessons
 {
-    public SectionShowPage(LessonSection section)
-    {
-        InitializeComponent();
-        BindingContext = section;
+    public partial class SectionShowPage : ContentPage
+    {  
+        public SectionShowPage(int lessonSectionId, string lessonTitle, int lessonId)
+        {
+            InitializeComponent();
+            BindingContext = new SectionShowViewModel(lessonSectionId, lessonTitle, lessonId);
+        }
     }
 }

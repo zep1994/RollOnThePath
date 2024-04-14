@@ -1,4 +1,5 @@
 using RollWithIt.Views;
+using RollWithIt.Views.Lessons;
 using System;
 using System.Net.Http;
 using System.Text;

@@ -2,14 +2,13 @@
 {
     public class LessonSection
     {
-        public required int Id { get; set; }
-        public required string Title { get; set; }
-        public string? Description { get; set; }
-        public bool? IsCompleted { get; set; }
-        public string? Focus { get; set; }
-
-        public List<SubLesson>? SubLessons { get; set; }
-        public int? LessonId { get; set; } // Foreign key for lesson
-        public Lesson? Lesson { get; set; } // Navigation property for lesson
+        public int Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public bool? IsCompleted { get; set; } = false;
+        public string? Focus { get; set; } = string.Empty;
+        public int LessonId { get; set; }
+        public Lesson? Lesson { get; set; }
+        public List<SubLesson>? SubLessons { get; set; } = new List<SubLesson>();
     }
 }

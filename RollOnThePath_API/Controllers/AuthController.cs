@@ -31,12 +31,13 @@ public class AuthController(IConfiguration config, ApplicationDbContext dbContex
         public IActionResult Login(UserLogin userLoginRequest)
         {
             var existingUser = _dbContext.Users.SingleOrDefault(u =>
-                u.Username == userLoginRequest.Username || u.Email == userLoginRequest.Username);
+            u != null && (u.Username == userLoginRequest.Username || u.Email == userLoginRequest.Username));
 
             if (existingUser == null || !BCrypt.Net.BCrypt.Verify(userLoginRequest.Password, existingUser.Password))
             {
                 return Unauthorized(new { message = "Invalid username/email or password" });
             }
+
 
             // Generate JWT token
             var token = GenerateJwtToken(existingUser);
@@ -45,18 +46,28 @@ public class AuthController(IConfiguration config, ApplicationDbContext dbContex
         }
 
         private string GenerateJwtToken(User user)
-    {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-        var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.Username.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.GivenName, user.FirstName),
-            new Claim(ClaimTypes.Surname, user.LastName)
-        };
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            // Create claims with null checks
+            var claims = new List<Claim>();
+            if (user != null)
+            {
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+
+                if (!string.IsNullOrEmpty(user.Username))
+                    claims.Add(new Claim(ClaimTypes.Name, user.Username));
+
+                if (!string.IsNullOrEmpty(user.Email))
+                    claims.Add(new Claim(ClaimTypes.Email, user.Email));
+
+                if (!string.IsNullOrEmpty(user.FirstName))
+                    claims.Add(new Claim(ClaimTypes.GivenName, user.FirstName));
+
+                if (!string.IsNullOrEmpty(user.LastName))
+                    claims.Add(new Claim(ClaimTypes.Surname, user.LastName));
+            }
 
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],
@@ -64,9 +75,10 @@ public class AuthController(IConfiguration config, ApplicationDbContext dbContex
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: credentials
-        );
+            );
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
     }
-}
 }

@@ -33,14 +33,11 @@ namespace RollOnThePath_API.Services
 
                 // Deserialize JSON response to UserInfo object
                 var userInfo = JsonConvert.DeserializeObject<UserInfo>(responseBody);
-                if (userInfo != null)
-                {
-                    return userInfo;
-                } else
-                {
-                    return null;
-                }
+               
+                if (userInfo == null) { throw new ArgumentNullException("userInfo"); }
 
+               return userInfo;
+  
             }
             catch (HttpRequestException ex)
             {

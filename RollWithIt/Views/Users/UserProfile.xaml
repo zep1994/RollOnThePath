@@ -1,22 +1,23 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RollWithIt.Views.Users.UserProfile"
              Title="UserProfile">
-    
-    <StackLayout Padding="20">
-        <Label Text="Username:" />
-        <Label x:Name="usernameLabel" TextColor="Red"/>
 
-        <Label Text="Email:" />
-        <Label x:Name="emailLabel" TextColor="Red"/>
-
-        <Label Text="First Name:" />
-        <Label x:Name="firstNameLabel" TextColor="Red"/>
-
-        <Label Text="Last Name:" />
-        <Label x:Name="lastNameLabel" TextColor="Red"/>
-
-        <Label x:Name="ErrorMessageLabel" Text="" TextColor="Red" />
-    </StackLayout>
+    <ScrollView>
+        <StackLayout Padding="20">
+            <Frame CornerRadius="10" Padding="10" Margin="0,20,0,20" BackgroundColor="#F5F5F5">
+                <StackLayout Spacing="10">
+                    <Label Text="Username" FontSize="18" FontAttributes="Bold" TextColor="#333333"/>
+                    <Label x:Name="usernameLabel" TextColor="#666666"/>
+                    <Label Text="Email" FontSize="18" FontAttributes="Bold" TextColor="#333333"/>
+                    <Label x:Name="emailLabel" TextColor="#666666"/>
+                    <Label Text="First Name" FontSize="18" FontAttributes="Bold" TextColor="#333333"/>
+                    <Label x:Name="firstNameLabel" TextColor="#666666"/>
+                    <Label Text="Last Name" FontSize="18" FontAttributes="Bold" TextColor="#333333"/>
+                    <Label x:Name="lastNameLabel" TextColor="#666666"/>
+                    <Label x:Name="ErrorMessageLabel" TextColor="Red" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

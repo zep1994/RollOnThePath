@@ -13,8 +13,8 @@ using RollOnThePath_API.Data;
 namespace RollOnThePath_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240413080849_Lessons")]
-    partial class Lessons
+    [Migration("20240413194244_LessonMigration")]
+    partial class LessonMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,6 +72,7 @@ namespace RollOnThePath_API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BeltRecommendation")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
@@ -79,16 +80,22 @@ namespace RollOnThePath_API.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Difficulty")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool?>("IsCompleted")
+                    b.Property<bool>("IsCompleted")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Lessons");
                 });
@@ -134,6 +141,7 @@ namespace RollOnThePath_API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Activities")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Content")
@@ -275,7 +283,6 @@ namespace RollOnThePath_API.Migrations
                         .HasColumnType("text[]");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -322,6 +329,17 @@ namespace RollOnThePath_API.Migrations
                         .WithMany("Competitions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RollOnThePath_API.Models.Lessons.Lesson", b =>
+                {
+                    b.HasOne("RollOnThePath_API.Models.User", "User")
+                        .WithMany("Lessons")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -386,6 +404,8 @@ namespace RollOnThePath_API.Migrations
             modelBuilder.Entity("RollOnThePath_API.Models.User", b =>
                 {
                     b.Navigation("Competitions");
+
+                    b.Navigation("Lessons");
 
                     b.Navigation("Matches");
                 });

@@ -6,11 +6,21 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace RollOnThePath_API.Migrations
 {
     /// <inheritdoc />
-    public partial class Lessons : Migration
+    public partial class LessonMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "FirstName",
+                table: "Users",
+                type: "character varying(50)",
+                maxLength: 50,
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "character varying(50)",
+                oldMaxLength: 50);
+
             migrationBuilder.CreateTable(
                 name: "Lessons",
                 columns: table => new
@@ -19,13 +29,20 @@ namespace RollOnThePath_API.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    BeltRecommendation = table.Column<string>(type: "text", nullable: true),
-                    Difficulty = table.Column<string>(type: "text", nullable: true),
-                    IsCompleted = table.Column<bool>(type: "boolean", nullable: true)
+                    BeltRecommendation = table.Column<string>(type: "text", nullable: false),
+                    Difficulty = table.Column<string>(type: "text", nullable: false),
+                    IsCompleted = table.Column<bool>(type: "boolean", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Lessons", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lessons_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,7 +81,7 @@ namespace RollOnThePath_API.Migrations
                     Objective = table.Column<string>(type: "text", nullable: true),
                     Difficulty = table.Column<string>(type: "text", nullable: true),
                     Notes = table.Column<string>(type: "text", nullable: true),
-                    Activities = table.Column<string>(type: "text", nullable: true),
+                    Activities = table.Column<string>(type: "text", nullable: false),
                     Resources = table.Column<string>(type: "text", nullable: true),
                     LessonSectionId = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -85,6 +102,11 @@ namespace RollOnThePath_API.Migrations
                 column: "LessonId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Lessons_UserId",
+                table: "Lessons",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SubLessons_LessonSectionId",
                 table: "SubLessons",
                 column: "LessonSectionId");
@@ -101,6 +123,18 @@ namespace RollOnThePath_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Lessons");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "FirstName",
+                table: "Users",
+                type: "character varying(50)",
+                maxLength: 50,
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "character varying(50)",
+                oldMaxLength: 50,
+                oldNullable: true);
         }
     }
 }
