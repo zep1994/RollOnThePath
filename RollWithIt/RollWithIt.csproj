@@ -57,7 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Platforms\Android\Resources\network_security_config.xml" />
+	  <AndroidResource Remove="Platforms\Android\Resources\xml\AndroidManifest.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -111,6 +111,22 @@
 	  <MauiXaml Update="Views\Users\UserStatPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+  <ItemGroup>
+    <None Update="AndroidManifest.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Platforms\Android\Resources\network_security_config.xml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+	  <None Update="Platforms\Android\AndroidManifest.xml">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>
