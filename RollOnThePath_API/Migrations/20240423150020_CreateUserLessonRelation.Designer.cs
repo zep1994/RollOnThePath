@@ -13,8 +13,8 @@ using RollOnThePath_API.Data;
 namespace RollOnThePath_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240412112811_Matches")]
-    partial class Matches
+    [Migration("20240423150020_CreateUserLessonRelation")]
+    partial class CreateUserLessonRelation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace RollOnThePath_API.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("RollOnThePath_API.Models.Competition", b =>
+            modelBuilder.Entity("RollOnThePath_API.Models.Jujitsu.Competition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace RollOnThePath_API.Migrations
                     b.ToTable("Competitions");
                 });
 
-            modelBuilder.Entity("RollOnThePath_API.Models.Match", b =>
+            modelBuilder.Entity("RollOnThePath_API.Models.Jujitsu.Match", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,15 +72,18 @@ namespace RollOnThePath_API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BeltRanking")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("CompetitionId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Gameplan")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PostMatchNotes")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("UserId")
@@ -99,7 +102,7 @@ namespace RollOnThePath_API.Migrations
                     b.ToTable("Matches");
                 });
 
-            modelBuilder.Entity("RollOnThePath_API.Models.Move", b =>
+            modelBuilder.Entity("RollOnThePath_API.Models.Jujitsu.Move", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -143,7 +146,73 @@ namespace RollOnThePath_API.Migrations
                     b.ToTable("Moves");
                 });
 
-            modelBuilder.Entity("RollOnThePath_API.Models.User", b =>
+            modelBuilder.Entity("RollOnThePath_API.Models.Lessons.Lesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Lessons");
+                });
+
+            modelBuilder.Entity("RollOnThePath_API.Models.Lessons.LessonSection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("LessonsSection");
+                });
+
+            modelBuilder.Entity("RollOnThePath_API.Models.Lessons.SubLesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("LessonSectionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LessonSectionId");
+
+                    b.ToTable("SubLessons");
+                });
+
+            modelBuilder.Entity("RollOnThePath_API.Models.Users.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,6 +221,7 @@ namespace RollOnThePath_API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BeltRank")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<List<string>>("Coaches")
@@ -206,9 +276,24 @@ namespace RollOnThePath_API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RollOnThePath_API.Models.Competition", b =>
+            modelBuilder.Entity("RollOnThePath_API.Models.Users.UserLessons", b =>
                 {
-                    b.HasOne("RollOnThePath_API.Models.User", "User")
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserId", "LessonId");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("UserLessons");
+                });
+
+            modelBuilder.Entity("RollOnThePath_API.Models.Jujitsu.Competition", b =>
+                {
+                    b.HasOne("RollOnThePath_API.Models.Users.User", "User")
                         .WithMany("Competitions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -217,15 +302,15 @@ namespace RollOnThePath_API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RollOnThePath_API.Models.Match", b =>
+            modelBuilder.Entity("RollOnThePath_API.Models.Jujitsu.Match", b =>
                 {
-                    b.HasOne("RollOnThePath_API.Models.Competition", "Competition")
+                    b.HasOne("RollOnThePath_API.Models.Jujitsu.Competition", "Competition")
                         .WithMany("Matches")
                         .HasForeignKey("CompetitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RollOnThePath_API.Models.User", "User")
+                    b.HasOne("RollOnThePath_API.Models.Users.User", "User")
                         .WithMany("Matches")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -236,16 +321,80 @@ namespace RollOnThePath_API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RollOnThePath_API.Models.Competition", b =>
+            modelBuilder.Entity("RollOnThePath_API.Models.Lessons.Lesson", b =>
+                {
+                    b.HasOne("RollOnThePath_API.Models.Users.User", null)
+                        .WithMany("Lessons")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("RollOnThePath_API.Models.Lessons.LessonSection", b =>
+                {
+                    b.HasOne("RollOnThePath_API.Models.Lessons.Lesson", "Lesson")
+                        .WithMany("LessonSections")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+                });
+
+            modelBuilder.Entity("RollOnThePath_API.Models.Lessons.SubLesson", b =>
+                {
+                    b.HasOne("RollOnThePath_API.Models.Lessons.LessonSection", "LessonSection")
+                        .WithMany("SubLessons")
+                        .HasForeignKey("LessonSectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LessonSection");
+                });
+
+            modelBuilder.Entity("RollOnThePath_API.Models.Users.UserLessons", b =>
+                {
+                    b.HasOne("RollOnThePath_API.Models.Lessons.Lesson", "Lesson")
+                        .WithMany("UserLessons")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RollOnThePath_API.Models.Users.User", "User")
+                        .WithMany("UserLessons")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RollOnThePath_API.Models.Jujitsu.Competition", b =>
                 {
                     b.Navigation("Matches");
                 });
 
-            modelBuilder.Entity("RollOnThePath_API.Models.User", b =>
+            modelBuilder.Entity("RollOnThePath_API.Models.Lessons.Lesson", b =>
+                {
+                    b.Navigation("LessonSections");
+
+                    b.Navigation("UserLessons");
+                });
+
+            modelBuilder.Entity("RollOnThePath_API.Models.Lessons.LessonSection", b =>
+                {
+                    b.Navigation("SubLessons");
+                });
+
+            modelBuilder.Entity("RollOnThePath_API.Models.Users.User", b =>
                 {
                     b.Navigation("Competitions");
 
+                    b.Navigation("Lessons");
+
                     b.Navigation("Matches");
+
+                    b.Navigation("UserLessons");
                 });
 #pragma warning restore 612, 618
         }

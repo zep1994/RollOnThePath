@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RollOnThePath_API.Data;
@@ -12,9 +13,11 @@ using RollOnThePath_API.Data;
 namespace RollOnThePath_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240423012819_UpdateUserLessons")]
+    partial class UpdateUserLessons
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,6 +25,21 @@ namespace RollOnThePath_API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("LessonUser", b =>
+                {
+                    b.Property<int>("LessonsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("LessonsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UserLessons", (string)null);
+                });
 
             modelBuilder.Entity("RollOnThePath_API.Models.Jujitsu.Competition", b =>
                 {
@@ -155,12 +173,10 @@ namespace RollOnThePath_API.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Lessons");
                 });
@@ -273,19 +289,19 @@ namespace RollOnThePath_API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RollOnThePath_API.Models.Users.UserLessons", b =>
+            modelBuilder.Entity("LessonUser", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.HasOne("RollOnThePath_API.Models.Lessons.Lesson", null)
+                        .WithMany()
+                        .HasForeignKey("LessonsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("LessonId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("UserId", "LessonId");
-
-                    b.HasIndex("LessonId");
-
-                    b.ToTable("UserLessons");
+                    b.HasOne("RollOnThePath_API.Models.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RollOnThePath_API.Models.Jujitsu.Competition", b =>
@@ -318,13 +334,6 @@ namespace RollOnThePath_API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RollOnThePath_API.Models.Lessons.Lesson", b =>
-                {
-                    b.HasOne("RollOnThePath_API.Models.Users.User", null)
-                        .WithMany("Lessons")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("RollOnThePath_API.Models.Lessons.LessonSection", b =>
                 {
                     b.HasOne("RollOnThePath_API.Models.Lessons.Lesson", "Lesson")
@@ -347,25 +356,6 @@ namespace RollOnThePath_API.Migrations
                     b.Navigation("LessonSection");
                 });
 
-            modelBuilder.Entity("RollOnThePath_API.Models.Users.UserLessons", b =>
-                {
-                    b.HasOne("RollOnThePath_API.Models.Lessons.Lesson", "Lesson")
-                        .WithMany("UserLessons")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RollOnThePath_API.Models.Users.User", "User")
-                        .WithMany("UserLessons")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lesson");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("RollOnThePath_API.Models.Jujitsu.Competition", b =>
                 {
                     b.Navigation("Matches");
@@ -374,8 +364,6 @@ namespace RollOnThePath_API.Migrations
             modelBuilder.Entity("RollOnThePath_API.Models.Lessons.Lesson", b =>
                 {
                     b.Navigation("LessonSections");
-
-                    b.Navigation("UserLessons");
                 });
 
             modelBuilder.Entity("RollOnThePath_API.Models.Lessons.LessonSection", b =>
@@ -387,11 +375,7 @@ namespace RollOnThePath_API.Migrations
                 {
                     b.Navigation("Competitions");
 
-                    b.Navigation("Lessons");
-
                     b.Navigation("Matches");
-
-                    b.Navigation("UserLessons");
                 });
 #pragma warning restore 612, 618
         }
