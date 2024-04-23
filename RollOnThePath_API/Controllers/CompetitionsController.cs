@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RollOnThePath_API.Data;
-using RollOnThePath_API.Models;
+using RollOnThePath_API.Models.Jujitsu;
 using System.Security.Claims;
 
 namespace RollOnThePath_API.Controllers

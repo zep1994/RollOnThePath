@@ -1,16 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-
 using RollOnThePath_API.Data;
-using RollOnThePath_API.Services;
+using RollOnThePath_API.Services.Lesson;
+using RollOnThePath_API.Services.Users;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace RollOnThePath_API
 {
@@ -26,12 +21,15 @@ namespace RollOnThePath_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
             // Register IHttpContextAccessor
             services.AddHttpContextAccessor();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILessonService, LessonService>(); // Register LessonService with dependency injection
             // Register IUserService and UserService
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAuthentication(options =>

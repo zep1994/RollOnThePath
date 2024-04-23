@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using RollOnThePath_API.Models;
-using RollOnThePath_API.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using RollOnThePath_API.Models.Jujitsu;
+using RollOnThePath_API.Data;
 
 
 namespace RollOnThePath_API.Controllers

@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using RollOnThePath_API.Data;
-using RollOnThePath_API.Models;
+using RollOnThePath_API.Models.Users;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace RollOnThePath_API.Controllers
 {
-[Route("api/[controller]")]
+    [Route("api/[controller]")]
 [ApiController]
 public class AuthController : ControllerBase
 {
