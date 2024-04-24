@@ -1,28 +1,24 @@
-using RollWithIt.Views;
-using System;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace RollWithIt.Auth;
+namespace RollWithIt.Views.Auth;
 
 public partial class LoginPage : ContentPage
 {
-    private readonly HttpClient _httpClient;
-    private readonly string _url;
+    private readonly HttpClient _httpClient = new HttpClient();
+    private readonly string _url = "http://10.0.2.2:5252";
 
     public LoginPage()
     {
         InitializeComponent();
-        _httpClient = new HttpClient();
-        _url = "http://10.0.2.2:5252";
     }
 
     private async void OnLoginClicked(object sender, EventArgs e)
     {
         string username = UsernameEntry.Text;
         string password = PasswordEntry.Text;
+        //string username = "t";
+        //string password = "123";
 
         if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {
@@ -54,8 +50,8 @@ public partial class LoginPage : ContentPage
                     // Handle the JWT token (e.g., save it to secure storage, set it as a property in App class, etc.)
                     App.JWTToken = tokenResponse.token;
 
-                    // Navigate to the next page (e.g., homepage)
-                    await Navigation.PushAsync(new HomePage());
+                    // Redirect to the MainPage
+                    App.LoginSuccess();
                 }
             }
             else
@@ -71,9 +67,22 @@ public partial class LoginPage : ContentPage
         }
     }
 
+    private async void OnSignUpTapped(object sender, EventArgs e)
+    {
+        try
+        {
+            App.SignUpSuccess();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Navigation to sign-up page failed: {ex}");
+        }
+    }
+
+
     // Define a class to represent the token response from the API
     public class TokenResponse
     {
-        public string token { get; set; }
+        public string? token { get; set; }
     }
 }

@@ -1,22 +1,20 @@
 using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text.Json;
-using RollWithIt.Models;
 using RollWithIt.Services;
+using RollWithIt.Models.Users;
 
 namespace RollWithIt.Views.Users;
 
 public partial class UserProfile : ContentPage
 {
-    private readonly string _url;
-    private readonly HttpClient _httpClient;
-    private UserInfo _userInfo;
+    private readonly string _url = "http://10.0.2.2:5252";
+    private readonly HttpClient _httpClient = new();
+    private UserInfo _userInfo = new();
 
     public UserProfile()
     {
-        InitializeComponent();
-        _url = "http://10.0.2.2:5252";
-        _httpClient = new HttpClient();
+        InitializeComponent(); 
     }
 
     protected override async void OnAppearing()
@@ -42,24 +40,27 @@ public partial class UserProfile : ContentPage
 
                 try
                 {
-                    // Deserialize JSON response into UserInfo object
-                    _userInfo = JsonSerializer.Deserialize<UserInfo>(jsonString);
+                    if (jsonString != null)
+                    {
+                        // Deserialize JSON response into UserInfo object
+                        _userInfo = JsonSerializer.Deserialize<UserInfo>(jsonString);
 
-                    // Check if deserialization was successful
-                    if (_userInfo != null)
-                    {
-                        // Bind _userInfo to UI elements
-                        usernameLabel.Text = _userInfo.Username;
-                        emailLabel.Text = _userInfo.Email;
-                        firstNameLabel.Text = _userInfo.FirstName;
-                        lastNameLabel.Text = _userInfo.LastName;
-                        beltRankLabel.Text = _userInfo.BeltRank;
-                        // Bind other properties as needed
-                    }
-                    else
-                    {
-                        ErrorMessageLabel.Text = "Failed to deserialize user profile data.";
-                    }
+                        // Check if deserialization was successful
+                        if (_userInfo != null)
+                        {
+                            // Bind _userInfo to UI elements
+                            usernameLabel.Text = _userInfo.UserName;
+                            emailLabel.Text = _userInfo.Email;
+                            firstNameLabel.Text = _userInfo.FirstName;
+                            lastNameLabel.Text = _userInfo.LastName;
+                            beltRankLabel.Text = _userInfo.BeltRank;
+                            // Bind other properties as needed
+                        }
+                        else
+                        {
+                            ErrorMessageLabel.Text = "Failed to deserialize user profile data.";
+                        }
+                    }  
                 }
                 catch (Exception ex)
                 {

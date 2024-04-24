@@ -1,6 +1,6 @@
-﻿using RollWithIt.Auth;
+﻿using RollWithIt.Views.Auth;
 
-namespace RollWithIt
+namespace RollWithIt.Views
 {
     public partial class MainPage : ContentPage
     {

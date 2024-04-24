@@ -5,23 +5,23 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace RollWithIt.Models
+namespace RollWithIt.Models.Users
 {
     public class UserInfo
     {
         [JsonPropertyName("username")]
-        public string Username { get; set; }
+        public string? UserName { get; set; }
 
         [JsonPropertyName("email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [JsonPropertyName("firstName")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [JsonPropertyName("lastName")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [JsonPropertyName("beltRank")]
-        public string BeltRank { get; set; }
+        public string? BeltRank { get; set; }
     }
 }

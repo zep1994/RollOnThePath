@@ -49,6 +49,17 @@ namespace RollOnThePath_API.Services.Users
             }
         }
 
+        public async Task<User> GetUserByUsername(string username)
+        {
+            try
+            {
+                return await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == username);
+            } catch (HttpRequestException ex)
+            {
+                throw new HttpRequestException("*** ERROR ***:", ex);
+            }
+        }
+
         public async Task<User> GetUserById(int id)
         {
             // Get the user's ID from the JWT token
@@ -114,32 +125,27 @@ namespace RollOnThePath_API.Services.Users
             }
         }
 
-        public async Task<List<Models.Lessons.Lesson>> GetUserLessons(int userId)
+        public async Task<IEnumerable<Models.Lessons.Lesson>> GetUserLessons(int userId)
         {
             try
             {
-                var lessons = await _dbContext.UserLessons
-                 .Include(ul => ul.Lesson)
-                 .ThenInclude(l => l.LessonSections)
-                 .ThenInclude(ls => ls.SubLessons)
-                 .Where(ul => ul.UserId == userId)
-                 .Select(ul => ul.Lesson)
-                 .ToListAsync();
+                var userLessons = await _dbContext.UserLessons
+                    .Where(ul => ul.UserId == userId)
+                    .Select(ul => ul.Lesson)
+                    .ToListAsync();
 
-                // Filter out null LessonSections and SubLessons, and select only their Id and Title properties
-                foreach (var lesson in lessons)
+                if (userLessons != null)
                 {
-                    lesson.LessonSections = lesson.LessonSections.Where(ls => ls != null).ToList();
-                    foreach (var lessonSection in lesson.LessonSections)
-                    {
-                        lessonSection.SubLessons = lessonSection.SubLessons.Where(sl => sl != null).ToList();
-                    }
+                    return userLessons;
+                } else
+                {
+                    throw new Exception("ERROR");
                 }
-
-                return lessons;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                throw new Exception("*** ERROR ***", ex);
+                // Log or handle the exception appropriately
+                throw new Exception("Error occurred while retrieving user lessons", ex);
             }
         }
 
@@ -154,6 +160,25 @@ namespace RollOnThePath_API.Services.Users
             await _dbContext.SaveChangesAsync();
 
             return user;
+        }
+
+        public async Task<bool> CheckUserNameAndEmail(UserSignUp userSignUp)
+        {
+            // Check if username exists
+            var userWithSameUserName = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == userSignUp.UserName);
+            if (userWithSameUserName != null)
+            {
+                return true; // Username already exists
+            }
+
+            // Check if email exists
+            var userWithSameEmail = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == userSignUp.Email);
+            if (userWithSameEmail != null)
+            {
+                return true; // Email already exists
+            }
+
+            return false; // Username and email are available
         }
 
     }
