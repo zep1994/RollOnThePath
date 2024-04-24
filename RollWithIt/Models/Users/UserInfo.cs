@@ -10,7 +10,7 @@ namespace RollWithIt.Models.Users
     public class UserInfo
     {
         [JsonPropertyName("username")]
-        public string? Username { get; set; }
+        public string? UserName { get; set; }
 
         [JsonPropertyName("email")]
         public string? Email { get; set; }

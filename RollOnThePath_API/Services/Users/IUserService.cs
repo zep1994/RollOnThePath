@@ -12,5 +12,6 @@ namespace RollOnThePath_API.Services.Users
         Task<User> CreateUser(User user);
         Task AddLessonToUser(int userId, int lessonId);
         Task<User> GetUserByUsername(string username);
+        Task<bool> CheckUserNameAndEmail(UserSignUp userSignUp);
     }
 }

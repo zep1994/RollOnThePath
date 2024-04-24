@@ -8,30 +8,29 @@ using System.Text;
 
 namespace RollOnThePath_API.Controllers
 {
-    [Route("api/[controller]")]
-[ApiController]
-public class AuthController : ControllerBase
-{
-    private readonly IConfiguration _config;
-    private readonly ApplicationDbContext _dbContext;
-
-    public AuthController(IConfiguration config, ApplicationDbContext dbContext)
+    [Route("api/[controller]"), ApiController]
+    public class AuthController : ControllerBase
     {
-        _config = config;
-        _dbContext = dbContext;
-    }
+        private readonly IConfiguration _config;
+        private readonly ApplicationDbContext _dbContext;
 
-    [HttpPost("signup")]
-    public async Task<IActionResult> SignUp(User user)
-    {
-        // Hash the password before storing
-        user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+        public AuthController(IConfiguration config, ApplicationDbContext dbContext)
+        {
+            _config = config;
+            _dbContext = dbContext;
+        }
 
-        _dbContext.Users.Add(user);
-        await _dbContext.SaveChangesAsync();
+        [HttpPost("signup")]
+        public async Task<IActionResult> SignUp(User user)
+        {
+            // Hash the password before storing
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
-        return Ok(new { message = "User created successfully" });
-    }
+            _dbContext.Users.Add(user);
+            await _dbContext.SaveChangesAsync();
+
+            return Ok(new { message = "User created successfully" });
+        }
 
         [HttpPost("login")]
         public IActionResult Login(UserLogin userLoginRequest)
@@ -50,26 +49,37 @@ public class AuthController : ControllerBase
             return Ok(new { token });
         }
 
-        private string GenerateJwtToken(User user)
-    {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-        var claims = new[]
+        [HttpPost("logout")]
+        public IActionResult Logout()
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.Username)
-        };
+            // Clear the authentication token (JWT token)
+            // For JWT tokens, you typically remove it from client-side storage (e.g., local storage or cookies)
+            // Example: remove JWT token from cookies
+            Response.Cookies.Delete("JWTToken");
 
-        var token = new JwtSecurityToken(
-            issuer: _config["Jwt:Issuer"],
-            audience: _config["Jwt:Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(1),
-            signingCredentials: credentials
-        );
+            return Ok(new { message = "Logout successful" });
+        }
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        private string GenerateJwtToken(User user)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username)
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
     }
-}
 }

@@ -5,14 +5,12 @@ namespace RollWithIt.Views.Auth;
 
 public partial class LoginPage : ContentPage
 {
-    private readonly HttpClient _httpClient;
-    private readonly string _url;
+    private readonly HttpClient _httpClient = new HttpClient();
+    private readonly string _url = "http://10.0.2.2:5252";
 
     public LoginPage()
     {
         InitializeComponent();
-        _httpClient = new HttpClient();
-        _url = "http://10.0.2.2:5252";
     }
 
     private async void OnLoginClicked(object sender, EventArgs e)
@@ -68,6 +66,19 @@ public partial class LoginPage : ContentPage
             await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
         }
     }
+
+    private async void OnSignUpTapped(object sender, EventArgs e)
+    {
+        try
+        {
+            App.SignUpSuccess();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Navigation to sign-up page failed: {ex}");
+        }
+    }
+
 
     // Define a class to represent the token response from the API
     public class TokenResponse

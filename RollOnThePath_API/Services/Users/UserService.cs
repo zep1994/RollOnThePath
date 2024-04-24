@@ -162,5 +162,24 @@ namespace RollOnThePath_API.Services.Users
             return user;
         }
 
+        public async Task<bool> CheckUserNameAndEmail(UserSignUp userSignUp)
+        {
+            // Check if username exists
+            var userWithSameUserName = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == userSignUp.UserName);
+            if (userWithSameUserName != null)
+            {
+                return true; // Username already exists
+            }
+
+            // Check if email exists
+            var userWithSameEmail = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == userSignUp.Email);
+            if (userWithSameEmail != null)
+            {
+                return true; // Email already exists
+            }
+
+            return false; // Username and email are available
+        }
+
     }
 }

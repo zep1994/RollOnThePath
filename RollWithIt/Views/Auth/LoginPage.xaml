@@ -7,6 +7,7 @@
     <StackLayout>
         <Entry x:Name="UsernameEntry" Placeholder="Username" />
         <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
-        <Button Text="Log In" Clicked="OnLoginClicked" />
+        <Button Text="Log In" Clicked="OnLoginClicked" Margin="20"/>
+        <Button Text="Don't have an account?" Clicked="OnSignUpTapped" />
     </StackLayout>
 </ContentPage>

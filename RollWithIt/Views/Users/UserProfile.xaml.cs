@@ -49,7 +49,7 @@ public partial class UserProfile : ContentPage
                         if (_userInfo != null)
                         {
                             // Bind _userInfo to UI elements
-                            usernameLabel.Text = _userInfo.Username;
+                            usernameLabel.Text = _userInfo.UserName;
                             emailLabel.Text = _userInfo.Email;
                             firstNameLabel.Text = _userInfo.FirstName;
                             lastNameLabel.Text = _userInfo.LastName;

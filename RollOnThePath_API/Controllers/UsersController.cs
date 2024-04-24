@@ -118,5 +118,15 @@ namespace RollOnThePath_API.Controllers
             }
         }
 
+        [HttpGet("signupvalidation")]
+        public async Task<IActionResult> CheckUserNameAndEmail([FromBody] UserSignUp userSignUp)
+        {
+            // Call the UserService method to check if the username or email already exists
+            bool userExists = await _userService.CheckUserNameAndEmail(userSignUp);
+
+            // Return true if username or email exists, false if not
+            return Ok(userExists);
+        }
+
     }
 }

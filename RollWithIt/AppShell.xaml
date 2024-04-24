@@ -3,9 +3,12 @@
     x:Class="RollWithIt.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:RollWithIt.Views"
+    xmlns:local="clr-namespace:RollWithIt"
     xmlns:controls="clr-namespace:RollWithIt.Controls"
     xmlns:auth="clr-namespace:RollWithIt.Views.Auth"
+    xmlns:views="clr-namespace:RollWithIt.Views"
+    xmlns:viewModels="clr-namespace:RollWithIt.ViewModels"
+    x:DataType="viewModels:AppShellViewModel"
     Shell.FlyoutBehavior="Flyout"
     Title="RollWithIt">
 
@@ -60,18 +63,24 @@
     <Shell.FlyoutHeader>
         <controls:FlyoutHeader />
     </Shell.FlyoutHeader>
+    
+    <!-- Home Page -->
     <FlyoutItem Title="Home">
         <ShellContent Route="Home"
                 Style="{StaticResource DomesticShell}"
                 Title="Home"
-                ContentTemplate="{DataTemplate local:MainPage}" />
+                ContentTemplate="{DataTemplate views:MainPage}" />
     </FlyoutItem>
+
+    <!-- Login Page -->
     <FlyoutItem Title="Login">
         <ShellContent Route="Login"
                 Style="{StaticResource DomesticShell}"
                 Title="Login"
                 ContentTemplate="{DataTemplate auth:LoginPage}" />
     </FlyoutItem>
+
+    <!-- Sign Up Page -->
     <FlyoutItem Title="SignUp">
         <ShellContent Route="SignUp"
                 Style="{StaticResource DomesticShell}"
@@ -79,7 +88,6 @@
                 ContentTemplate="{DataTemplate auth:SignUpPage}" />
     </FlyoutItem>
 
-
-
-
+    <!-- Logout Button -->
+    <ToolbarItem Text="{Binding LogoutButtonText}" Command="{Binding OnLogoutClickedCommand}" />
 </Shell>

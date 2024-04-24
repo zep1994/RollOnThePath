@@ -28,5 +28,11 @@ namespace RollWithIt
             // Update MainPage to the home page (MainPage in AppShell)
             Current.MainPage = new AppShell();
         }
+
+        public static void SignUpSuccess()
+        {
+            // After successful sign-up, navigate to the main page
+            Current.MainPage = new AppShell();
+        }
     }
 }
