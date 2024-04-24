@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RollOnThePath_API.Data;
 using RollOnThePath_API.Models.Lessons;
-using static System.Collections.Specialized.BitVector32;
 
 namespace RollOnThePath_API.Services.Lesson
 {

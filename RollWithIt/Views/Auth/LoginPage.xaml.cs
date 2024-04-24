@@ -1,9 +1,5 @@
-using RollWithIt.Views;
-using System;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace RollWithIt.Views.Auth;
 
@@ -56,8 +52,8 @@ public partial class LoginPage : ContentPage
                     // Handle the JWT token (e.g., save it to secure storage, set it as a property in App class, etc.)
                     App.JWTToken = tokenResponse.token;
 
-                    // Navigate to the next page (e.g., homepage)
-                    await Navigation.PushAsync(new HomePage());
+                    // Redirect to the MainPage
+                    App.LoginSuccess();
                 }
             }
             else
