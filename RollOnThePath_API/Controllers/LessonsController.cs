@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RollOnThePath_API.Models.Lessons;
 using RollOnThePath_API.Services.Lesson;
 
 namespace RollOnThePath_API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), ApiController]
     public class LessonsController : ControllerBase
     {
         private readonly ILessonService _lessonService;
@@ -78,7 +78,7 @@ namespace RollOnThePath_API.Controllers
                     return NotFound($"Lesson with ID {lessonId} not found");
                 }
 
-                return CreatedAtAction(nameof(GetLessonSection), new { lessonId, id = createdLessonSection.Id }, createdLessonSection);
+                return CreatedAtAction(nameof(GetLessonSections), new { lessonId, id = createdLessonSection.Id }, createdLessonSection);
             }
             catch (Exception ex)
             {
@@ -86,18 +86,27 @@ namespace RollOnThePath_API.Controllers
             }
         }
 
-        [HttpGet("sections/{id}")]
-        public async Task<ActionResult<LessonSection>> GetLessonSection(int id)
+        [HttpGet("{lessonId}/sections")]
+        public async Task<IActionResult> GetLessonSections(int lessonId)
         {
             try
             {
-                var lessonSection = await _lessonService.GetLessonSection(id);
-                if (lessonSection == null)
+                var lessonSections = await _lessonService.GetLessonSectionsAsync(lessonId);
+                // Configure JSON serializer settings
+                var serializerSettings = new JsonSerializerSettings
                 {
-                    return NotFound($"Lesson section with ID {id} not found");
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    PreserveReferencesHandling = PreserveReferencesHandling.None
+                };
+
+                var json = JsonConvert.SerializeObject(lessonSections, serializerSettings);
+
+                if (json == null)
+                {
+                    return NotFound($"Lesson section with ID {lessonId} not found");
                 }
 
-                return Ok(lessonSection);
+                return Content(json, "application/json");
             }
             catch (Exception ex)
             {

@@ -1,12 +1,9 @@
 ﻿using Newtonsoft.Json;
-using RollWithIt.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RollWithIt.Models.Users;
+using System.Net.Http.Headers;
 
-namespace RollWithIt.Services
+
+namespace RollWithIt.Services.User
 {
     public class UserService
     {
@@ -26,7 +23,7 @@ namespace RollWithIt.Services
             var jwtToken = App.JWTToken;
 
             // Set JWT token in request headers
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwtToken);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
             try
             {

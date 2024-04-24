@@ -111,9 +111,22 @@ namespace RollOnThePath_API.Services.Lesson
         }
 
 
-        public async Task<LessonSection> GetLessonSection(int lessonSectionId)
+        public async Task<List<LessonSection>> GetLessonSectionsAsync(int lessonId)
         {
-            return await _dbContext.LessonsSection.FindAsync(lessonSectionId);
+            try
+            {
+                var sections = await _dbContext.LessonsSection
+                         .Where(ls => ls.LessonId == lessonId)
+                         .ToListAsync();
+                return sections;
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the error or handle it accordingly
+                Console.WriteLine($"Error in GetLessonSectionsAsync: {ex.Message}");
+                throw; // Rethrow the exception to propagate it
+            }
+
         }
     }
 }

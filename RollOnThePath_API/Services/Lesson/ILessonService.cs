@@ -8,7 +8,7 @@ namespace RollOnThePath_API.Services.Lesson
         Task<Models.Lessons.Lesson> GetLessonById(int id);
         Task AddLesson(Models.Lessons.Lesson lesson);
         Task<LessonSection> CreateLessonSection(int lessonId, LessonSection sectionModel);
-        Task<LessonSection> GetLessonSection(int id);
+        Task<List<LessonSection>> GetLessonSectionsAsync(int lessonId);
         Task<SubLesson> CreateSubLesson(int sectionId, SubLesson subLesson);
 
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using RollOnThePath_API.Data;
 using RollOnThePath_API.Models;
 using RollOnThePath_API.Models.Users;
@@ -10,8 +11,7 @@ using System.Security.Claims;
 
 namespace RollOnThePath_API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), ApiController]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -21,40 +21,39 @@ namespace RollOnThePath_API.Controllers
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
-        //[Authorize]
-        //[HttpGet("UserProfile")]
-        //public async Task<ActionResult<UserInfo>> GetUserProfile()
-        //{
-        //    // Get the username from the JWT token
-        //    var usernameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
-        //    if (usernameClaim == null)
-        //    {
-        //        return Unauthorized();
-        //    }
-        //    var username = usernameClaim.Value;
+        [HttpGet("UserProfile"), Authorize]
+        public async Task<ActionResult<UserInfo>> GetUserProfile()
+        {
+            // Get the username from the JWT token
+            var usernameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            if (usernameClaim == null)
+            {
+                return Unauthorized();
+            }
+            var username = usernameClaim.Value;
 
-        //    // Retrieve user information from the UserService
-        //    var user = await _userService.GetUserByUsername(username);
+            // Retrieve user information from the UserService
+            var user = await _userService.GetUserByUsername(username);
 
-        //    if (user == null)
-        //    {
-        //        return NotFound("User not found");
-        //    }
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
 
-        //    // Map user information to UserInfo model
-        //    var userInfo = new UserInfo
-        //    {
-        //        Username = user.Username,
-        //        Email = user.Email,
-        //        FirstName = user.FirstName,
-        //        LastName = user.LastName,
-        //        BeltRank = user.BeltRank
-        //    };
+            // Map user information to UserInfo model
+            var userInfo = new UserInfo
+            {
+                Username = user.Username,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                BeltRank = user.BeltRank
+            };
 
-        //    return Ok(userInfo);
-        //}
+            return Ok(userInfo);
+        }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllUsers();
@@ -73,13 +72,25 @@ namespace RollOnThePath_API.Controllers
         }
 
         [HttpGet("{userId}/lessons")]
-        public async Task<IActionResult> GetUserLessons(int userId)
+        public async Task<ActionResult<IEnumerable<Models.Lessons.Lesson>>> GetUserLessons(int userId)
         {
             var lessons = await _userService.GetUserLessons(userId);
-            return Ok(lessons);
+
+            // Configure JSON serializer settings
+            var serializerSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.None
+            };
+
+            // Serialize lessons to JSON
+            var json = JsonConvert.SerializeObject(lessons, serializerSettings);
+
+            // Return JSON response
+            return Content(json, "application/json");
         }
 
-        [HttpPost("{userId}/add-lesson")]
+        [HttpPost("{userId}/add-lesson"), Authorize]
         public async Task<IActionResult> AddLessonToUser(int userId, [FromBody] UserLessons request)
         {
             try
@@ -93,8 +104,7 @@ namespace RollOnThePath_API.Controllers
             }
         }
 
-
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {
             try

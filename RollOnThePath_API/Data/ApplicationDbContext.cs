@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using RollOnThePath_API.Models.Jujitsu;
 using RollOnThePath_API.Models.Lessons;
 using RollOnThePath_API.Models.Users;
@@ -10,6 +11,11 @@ namespace RollOnThePath_API.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
         }
 
         public DbSet<Move> Moves { get; set; }

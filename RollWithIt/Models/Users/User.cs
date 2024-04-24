@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RollWithIt.Models
+namespace RollWithIt.Models.Users
 {
     public class User
     {
-        public string Username { get; set; }
-        public string? Email { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
         public string? Password { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

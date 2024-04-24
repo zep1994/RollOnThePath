@@ -1,5 +1,6 @@
 using Microsoft.Maui.Controls;
 using RollWithIt.Models;
+using RollWithIt.Models.Users;
 using RollWithIt.Views;
 using System;
 using System.Net.Http;

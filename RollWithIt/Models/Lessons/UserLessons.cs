@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RollWithIt.Models;
 
-namespace RollWithIt.Services
+namespace RollWithIt.Models.Lessons
 {
-    public interface IUserService
+    public class UserLessons
     {
-        Task<UserInfo> GetUserInfoAsync();
     }
 }
