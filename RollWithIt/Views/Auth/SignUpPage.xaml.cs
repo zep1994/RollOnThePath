@@ -1,16 +1,8 @@
-using Microsoft.Maui.Controls;
-using RollWithIt.Models;
 using RollWithIt.Models.Users;
-using RollWithIt.Views;
-using System;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace RollWithIt.Auth;
-    public partial class SignUpPage : ContentPage
+namespace RollWithIt.Views.Auth;
+public partial class SignUpPage : ContentPage
     {
     private readonly HttpClient _httpClient;
     private readonly string _url;

@@ -3,13 +3,83 @@
     x:Class="RollWithIt.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:RollWithIt"
-    Shell.FlyoutBehavior="Disabled"
+    xmlns:local="clr-namespace:RollWithIt.Views"
+    xmlns:controls="clr-namespace:RollWithIt.Controls"
+    xmlns:auth="clr-namespace:RollWithIt.Views.Auth"
+    Shell.FlyoutBehavior="Flyout"
     Title="RollWithIt">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.Resources>
+        <Style x:Key="BaseStyle"
+               TargetType="Element">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="#000" />
+            <Setter Property="Shell.ForegroundColor"
+                    Value="Red" />
+            <Setter Property="Shell.TitleColor"
+                    Value="White" />
+            <Setter Property="Shell.DisabledColor"
+                    Value="Green" />
+            <Setter Property="Shell.UnselectedColor"
+                    Value="Purple" />
+        </Style>
+        <Style TargetType="ShellItem"
+               BasedOn="{StaticResource BaseStyle}" />
+        <Style x:Key="DomesticShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="Black" />
+        </Style>
+        <Style x:Key="MonkeysShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="#689F39" />
+        </Style>
+        <Style x:Key="ElephantsShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="#ED3B3B" />
+        </Style>
+        <Style x:Key="BearsShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="#546DFE" />
+        </Style>
+        <Style x:Key="AboutShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="#96d1ff" />
+        </Style>
+    </Shell.Resources>
+
+    <Shell.FlyoutHeader>
+        <controls:FlyoutHeader />
+    </Shell.FlyoutHeader>
+    <FlyoutItem Title="Home">
+        <ShellContent Route="Home"
+                Style="{StaticResource DomesticShell}"
+                Title="Home"
+                ContentTemplate="{DataTemplate local:MainPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Login">
+        <ShellContent Route="Login"
+                Style="{StaticResource DomesticShell}"
+                Title="Login"
+                ContentTemplate="{DataTemplate auth:LoginPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="SignUp">
+        <ShellContent Route="SignUp"
+                Style="{StaticResource DomesticShell}"
+                Title="SignUp"
+                ContentTemplate="{DataTemplate auth:SignUpPage}" />
+    </FlyoutItem>
+
+
+
 
 </Shell>

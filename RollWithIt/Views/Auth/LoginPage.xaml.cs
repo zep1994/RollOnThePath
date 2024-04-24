@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace RollWithIt.Auth;
+namespace RollWithIt.Views.Auth;
 
 public partial class LoginPage : ContentPage
 {
@@ -21,10 +21,10 @@ public partial class LoginPage : ContentPage
 
     private async void OnLoginClicked(object sender, EventArgs e)
     {
-        //string username = UsernameEntry.Text;
-        //string password = PasswordEntry.Text;
-        string username = "t";
-        string password = "123";
+        string username = UsernameEntry.Text;
+        string password = PasswordEntry.Text;
+        //string username = "t";
+        //string password = "123";
 
         if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {
@@ -76,6 +76,6 @@ public partial class LoginPage : ContentPage
     // Define a class to represent the token response from the API
     public class TokenResponse
     {
-        public string token { get; set; }
+        public string? token { get; set; }
     }
 }

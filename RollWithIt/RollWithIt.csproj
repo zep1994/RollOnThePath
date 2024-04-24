@@ -70,7 +70,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Auth\SignUpPage.xaml.cs">
+	  <Compile Update="Views\Auth\SignUpPage.xaml.cs">
 	    <DependentUpon>SignUpPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\Users\UserProfile.xaml.cs">
@@ -82,13 +82,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Auth\LoginPage.xaml">
+	  <MauiXaml Update="Controls\FlyoutHeader.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Auth\SignUpPage.xaml">
+	  <MauiXaml Update="Views\Auth\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Components\SlidingSidebarMenu.xaml">
+	  <MauiXaml Update="Views\Auth\SignUpPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\HomePage.xaml">

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RollWithIt.Auth.SignUpPage"
-             xmlns:local="clr-namespace:RollWithIt.Auth"
+             x:Class="RollWithIt.Views.Auth.SignUpPage"
+             xmlns:local="clr-namespace:RollWithIt.Views.Auth"
              Title="SignUpPage">
     
     <StackLayout Padding="20">

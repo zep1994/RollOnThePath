@@ -1,4 +1,6 @@
-﻿namespace RollWithIt
+﻿using RollWithIt.Views;
+
+namespace RollWithIt
 {
     public partial class App : Application
     {
