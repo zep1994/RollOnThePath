@@ -7,6 +7,13 @@ namespace RollWithIt.ViewModels
 {
     public class LessonShowViewModel : BaseViewModel
     {
+        private Lesson? _lesson;
+        public Lesson? Lesson
+        {
+            get => _lesson;
+            set => SetProperty(ref _lesson, value);
+        }
+
         private readonly LessonService _lessonService = new();
 
         private ObservableCollection<LessonSection>? _lessonSections;
@@ -14,6 +21,14 @@ namespace RollWithIt.ViewModels
         {
             get => _lessonSections;
             set => SetProperty(ref _lessonSections, value);
+        }
+
+        // Property to store the selected lesson
+        private LessonSection? _selectedLessonSection;
+        public LessonSection? SelectedSubLesson
+        {
+            get => _selectedLessonSection;
+            set => SetProperty(ref _selectedLessonSection, value);
         }
 
         public LessonShowViewModel()

@@ -114,6 +114,34 @@ namespace RollOnThePath_API.Controllers
             }
         }
 
+        [HttpGet("{lessonSectionId}/sublessons")]
+        public async Task<IActionResult> GetSubLessonsAsync(int lessonSectionId)
+        {
+            try
+            {
+                var subLessons = await _lessonService.GetSubLessonsAsync(lessonSectionId);
+                // Configure JSON serializer settings
+                var serializerSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    PreserveReferencesHandling = PreserveReferencesHandling.None
+                };
+
+                var json = JsonConvert.SerializeObject(subLessons, serializerSettings);
+
+                if (json == null)
+                {
+                    return NotFound($"Lesson section with ID {lessonSectionId} not found");
+                }
+
+                return Content(json, "application/json");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpPost("sections/{sectionId}/sublessons")]
         public async Task<IActionResult> CreateSubLesson(int sectionId, SubLesson subLesson)
         {

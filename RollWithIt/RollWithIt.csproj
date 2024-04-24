@@ -94,6 +94,9 @@
 	  <MauiXaml Update="Views\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Lessons\LessonSectionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Lessons\LessonShowPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -128,6 +128,24 @@ namespace RollOnThePath_API.Services.Lesson
             }
 
         }
+
+        public async Task<List<SubLesson>> GetSubLessonsAsync(int lessonSectionId)
+        {
+            try
+            {
+                // Retrieve sublessons from the database for the given lesson section ID
+                var subLessons = await _dbContext.SubLessons
+                                                   .Where(sl => sl.LessonSectionId == lessonSectionId)
+                                                   .ToListAsync();
+
+                return subLessons;
+            }
+            catch (Exception ex)
+            {
+                // Log the error or handle it as needed
+                throw new Exception("Error occurred while fetching sublessons", ex);
+            }
+        }
     }
 }
 

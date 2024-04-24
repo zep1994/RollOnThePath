@@ -72,6 +72,33 @@ namespace RollWithIt.Services.Lesson
             }
         }
 
+        public async Task<List<SubLesson>> GetSubLessonsAsync(string lessonSectionId)
+        {
+            var jwtToken = App.JWTToken;
+            if (jwtToken == null) { throw new ArgumentNullException(nameof(jwtToken)); }
+            // Ensure JWT token is provided
+            if (string.IsNullOrEmpty(jwtToken))
+            {
+                throw new ArgumentNullException(nameof(jwtToken), "JWT token cannot be null or empty");
+            }
+
+            // Set JWT token in the request header
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+
+            var response = await _httpClient.GetAsync($"{_baseUrl}/api/lessonsections/{lessonSectionId}/sublessons");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<List<SubLesson>>(content);
+            }
+            else
+            {
+                // Handle unsuccessful response
+                return new List<SubLesson>();
+            }
+        }
+
+
         private static string? GetUserIdFromToken(string jwtToken)
         {
             try

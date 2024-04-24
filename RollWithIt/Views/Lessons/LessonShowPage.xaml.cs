@@ -29,5 +29,11 @@ namespace RollWithIt.Views.Lessons
                 await viewModel.LoadLessonSections(_lessonId);
             }
         }
+
+        private async void OnViewSublessonsClicked(object sender, EventArgs e)
+        {
+            // Navigate to LessonSectionPage and pass the selected lesson section
+            await Navigation.PushAsync(new LessonSectionPage(_viewModel.SelectedSubLesson));
+        }
     }
 }
