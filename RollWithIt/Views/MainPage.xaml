@@ -2,9 +2,43 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:RollWithIt.Views"
-             x:Class="RollWithIt.Views.MainPage">
+             x:Class="RollWithIt.Views.MainPage"
+             Title="Home">
 
-    <StackLayout>
-        <Label Text="Roll With It" FontSize="Large" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
-    </StackLayout>
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="20">
+            <!-- App Title -->
+            <Label Text="JuJitsu Techniques"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <!-- Learn New Techniques Button -->
+            <Button Text="Learn New Techniques"
+                    FontSize="18"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    Clicked="OnLearnNewTechniquesClicked"
+                    CornerRadius="10"
+                    Margin="0,20,0,0" />
+
+            <!-- Tracked Lessons Button -->
+            <Button Text="Tracked Lessons"
+                    FontSize="18"
+                    BackgroundColor="#2196F3"
+                    TextColor="White"
+                    Clicked="OnTrackedLessonsClicked"
+                    CornerRadius="10"
+                    Margin="0,20,0,0" />
+
+            <!-- User Profile Button -->
+            <Button Text="User Profile"
+                    FontSize="18"
+                    BackgroundColor="#FF5722"
+                    TextColor="White"
+                    Clicked="OnUserProfileClicked"
+                    CornerRadius="10"
+                    Margin="0,20,0,0" />
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

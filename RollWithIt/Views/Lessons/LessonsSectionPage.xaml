@@ -1,0 +1,38 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RollWithIt.Views.Lessons.LessonsSectionPage"
+             x:DataType="viewModel:LessonsSectionViewModel"
+             xmlns:viewModel="clr-namespace:RollWithIt.ViewModels">
+
+    <ContentPage.Content>
+        <StackLayout Margin="10">
+            <!-- Lesson Title -->
+            <Label Text="{Binding Lesson.Title}"
+                   FontAttributes="Bold"
+                   FontSize="Large"
+                   HorizontalOptions="Start"
+                   Margin="0,10,0,20"/>
+
+            <!-- SubLessons List -->
+            <ListView ItemsSource="{Binding LessonSections}">
+                <!--ItemTapped="OnSubLessonTapped"-->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <!--<Button Text="{Binding Title}"
+                                        Clicked="OnLessonSectionClicked"
+                                        CommandParameter="{Binding}"
+                                        BackgroundColor="Transparent"
+                                        TextColor="Blue"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="CenterAndExpand"
+                                        Margin="0,5"/>-->
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

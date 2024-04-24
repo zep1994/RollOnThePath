@@ -32,8 +32,11 @@ namespace RollWithIt.Views.Lessons
 
         private async void OnViewSublessonsClicked(object sender, EventArgs e)
         {
-            // Navigate to LessonSectionPage and pass the selected lesson section
-            await Navigation.PushAsync(new LessonSectionPage(_viewModel.SelectedSubLesson));
+            if (sender is Button { BindingContext: LessonSection lessonSection })
+            {
+                _viewModel.SelectedSubLesson = lessonSection;
+                await Navigation.PushAsync(new LessonSectionPage(lessonSection));
+            }
         }
     }
 }
