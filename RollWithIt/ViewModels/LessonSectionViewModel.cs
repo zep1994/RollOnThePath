@@ -36,7 +36,19 @@ namespace RollWithIt.ViewModels
             SubLessons = new ObservableCollection<SubLesson>();
         }
 
-        public async Task LoadSubLessons(string lessonSectionId)
+        public async Task LoadSubLessons(int lessonSectionId)
+        {
+            // Load the SubLessons from a data source
+            // Example:
+            var subLessons = await _lessonService.GetSubLessonsBySectionId(lessonSectionId);
+            SubLessons.Clear();
+            foreach (var subLesson in subLessons)
+            {
+                SubLessons.Add(subLesson);
+            }
+        }
+
+        public async Task OnLessonSectionClicked(int lessonSectionId)
         {
             var subLessons = await _lessonService.GetSubLessonsAsync(lessonSectionId);
             if (SubLessons != null)

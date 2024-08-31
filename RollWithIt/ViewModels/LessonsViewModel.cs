@@ -31,7 +31,7 @@ namespace RollWithIt.ViewModels
 
         public async Task LoadLessonsAsync()
         {
-            var lessons = await _lessonService.GetUserLessonsAsync();
+                                                                                                                                                                                                                                                            var lessons = await _lessonService.GetAllLessons();
             if (Lessons != null)
             {
                 Lessons.Clear();

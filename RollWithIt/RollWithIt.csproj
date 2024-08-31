@@ -106,6 +106,9 @@
 	  <MauiXaml Update="Views\Lessons\ProgressionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Lessons\SubLessonDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Users\UserProfile.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
