@@ -15,6 +15,12 @@ namespace RollWithIt.Views
             await Navigation.PushAsync(new LoginPage());
         }
 
+        private async void OnLessonsButtonClicked(object sender, EventArgs e)
+        {
+            // Navigate to the LessonsPage
+            await Navigation.PushAsync(new Lessons.LessonsPage());
+        }
+
         private async void OnSignUpClicked(object sender, EventArgs e)
         {
             // Navigate to the sign-up page
