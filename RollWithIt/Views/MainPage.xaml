@@ -6,5 +6,10 @@
 
     <StackLayout>
         <Label Text="Roll With It" FontSize="Large" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+        <!-- Button to navigate to LessonsPage -->
+        <Button Text="Go to Lessons"
+                Clicked="OnLessonsButtonClicked"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center" />
     </StackLayout>
 </ContentPage>

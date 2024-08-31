@@ -3,16 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RollWithIt.Views.Lessons.LessonsPage"
              x:DataType="viewModel:LessonsViewModel"
-             xmlns:viewModel="clr-namespace:RollWithIt.ViewModels">
+             xmlns:viewModel="clr-namespace:RollWithIt.ViewModels"
+             Title="Lesson's Page">
+    <ContentPage.Resources>
+        <x:Double x:Key="boxSize">50</x:Double>
+        <x:Int32 x:Key="rowHeight">60</x:Int32>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ListView x:Name="LessonsListView"
               ItemsSource="{Binding Lessons}"
               SelectionMode="None"
+              RowHeight="{StaticResource rowHeight}"
               VerticalOptions="FillAndExpand">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout BackgroundColor="#f0f0f0" MinimumHeightRequest="100">
+                        <StackLayout Padding="5, 5, 0, 5"
+                                 Orientation="Horizontal"
+                                 Spacing="15">
                             <!-- Lesson Title -->
                             <Label Text="{Binding Title}"
                                FontAttributes="Bold"
@@ -21,6 +29,7 @@
                             <!-- Navigate to LessonPage -->
                             <Button Text="View Lesson"
                                 Clicked="OnLessonClicked"
+                                CornerRadius="10"
                                 CommandParameter="{Binding}"/>
                         </StackLayout>
                     </ViewCell>

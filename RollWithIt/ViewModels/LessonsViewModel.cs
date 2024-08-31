@@ -31,7 +31,13 @@ namespace RollWithIt.ViewModels
 
         public async Task LoadLessonsAsync()
         {
-            var lessons = await _lessonService.GetUserLessonsAsync();
+            var lessons = await _lessonService.GetAllLessons();
+            if (lessons == null || lessons.Count == 0)
+            {
+                Console.WriteLine("No lessons found or an error occurred.");
+                return;
+            }
+
             if (Lessons != null)
             {
                 Lessons.Clear();
@@ -40,6 +46,9 @@ namespace RollWithIt.ViewModels
             {
                 Lessons.Add(lesson);
             }
+
+            Console.WriteLine($"Loaded {Lessons.Count} lessons.");
         }
+
     }
 }

@@ -6,17 +6,17 @@ namespace RollWithIt.Models.Lessons
     public class Lesson
     {
         [Key]
-        [JsonPropertyName("Id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
         [Required]
-        [JsonPropertyName("Title")]
+        [JsonPropertyName("title")]
         public string Title { get; set; } = string.Empty;
 
-        [JsonPropertyName("LessonSections")]
+        [JsonPropertyName("lessonSections")]
         public List<LessonSection>? LessonSections { get; set; }
 
-        [JsonPropertyName("UserLessons")]
+        [JsonPropertyName("userLessons")]
         public ICollection<UserLessons>? UserLessons { get; set; }
     }
 }

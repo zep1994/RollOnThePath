@@ -11,6 +11,44 @@ namespace RollWithIt.Services.Lesson
         private readonly string _baseUrl = "http://10.0.2.2:5252";
         private readonly HttpClient _httpClient = new();
 
+
+        public async Task<List<Models.Lessons.Lesson>?> GetAllLessons()
+        {
+            var jwtToken = App.JWTToken;
+            if (jwtToken == null) { throw new ArgumentNullException(nameof(jwtToken)); }
+            // Ensure JWT token is provided
+            if (string.IsNullOrEmpty(jwtToken))
+            {
+                throw new ArgumentNullException(nameof(jwtToken), "JWT token cannot be null or empty");
+            }
+            // Set JWT token in the request header
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+
+            // Make GET request to retrieve user's lessons
+            HttpResponseMessage response = await _httpClient.GetAsync($"{_baseUrl}/api/lessons/");
+            response.EnsureSuccessStatusCode(); // Throw exception for non-success status codes
+
+            // Deserialize response content to list of lessons
+            string content = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Response Content: {content}");
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            LessonResponse? lessonResponse = JsonSerializer.Deserialize<LessonResponse>(content, options);
+            List<Models.Lessons.Lesson>? lessons = lessonResponse?.Values;
+
+            if (lessons == null || lessons.Count == 0)
+            {
+                return null;
+            }
+
+            return lessons;
+        }
+
+
         public async Task<List<Models.Lessons.Lesson>?> GetUserLessonsAsync()
         {
             try
