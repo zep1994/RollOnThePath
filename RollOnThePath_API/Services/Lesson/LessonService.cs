@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RollOnThePath_API.Data;
 using RollOnThePath_API.Models.Lessons;
+using RollOnThePath_API.Models.Users;
 
 namespace RollOnThePath_API.Services.Lesson
 {
@@ -25,6 +26,18 @@ namespace RollOnThePath_API.Services.Lesson
                 // Log the exception
                 Console.WriteLine($"Error occurred while fetching lessons: {ex.Message}");
                 throw; // Re-throw the exception for centralized exception handling
+            }
+        }
+
+        public async Task<User> GetUserById(string id)
+        {
+            try
+            {
+                return await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == int.Parse(id));
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new HttpRequestException("*** ERROR ***:", ex);
             }
         }
 
@@ -128,6 +141,13 @@ namespace RollOnThePath_API.Services.Lesson
 
         }
 
+        public async Task<List<Models.Lessons.Lesson>> GetAllLessonsMatchingBelt(string beltColor)
+        {
+            return await _dbContext.Lessons
+                                 .Where(l => l.Belt == beltColor)
+                                 .ToListAsync();
+        }
+
         public async Task<List<SubLesson>> GetSubLessonsAsync(int lessonSectionId)
         {
             try
@@ -147,4 +167,3 @@ namespace RollOnThePath_API.Services.Lesson
         }
     }
 }
-
