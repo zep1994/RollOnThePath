@@ -7,23 +7,22 @@ namespace RollWithIt.ViewModels
 {
     public class LessonSectionViewModel : BaseViewModel
     {
-        private LessonSection? _lessonSection;
-        public LessonSection? LessonSection
+        private ObservableCollection<LessonSection> _lessonSections = new ObservableCollection<LessonSection>();
+        public ObservableCollection<LessonSection> LessonSections
         {
-            get => _lessonSection;
-            set => SetProperty(ref _lessonSection, value);
+            get => _lessonSections;
+            set => SetProperty(ref _lessonSections, value);
         }
 
         private readonly LessonService _lessonService = new();
 
-        private ObservableCollection<SubLesson>? _subLessons;
-        public ObservableCollection<SubLesson>? SubLessons
+        private Lesson _lesson;
+        public Lesson Lesson
         {
-            get => _subLessons;
-            set => SetProperty(ref _subLessons, value);
+            get => _lesson;
+            set => SetProperty(ref _lesson, value);
         }
 
-        // Property to store the selected lesson
         private SubLesson? _selectedSubLesson;
         public SubLesson? SelectedSubLesson
         {
@@ -33,31 +32,17 @@ namespace RollWithIt.ViewModels
 
         public LessonSectionViewModel()
         {
-            SubLessons = new ObservableCollection<SubLesson>();
+            _lessonSections = new ObservableCollection<LessonSection>();
         }
 
-        public async Task LoadSubLessons(int lessonSectionId)
-        {
-            // Load the SubLessons from a data source
-            // Example:
-            var subLessons = await _lessonService.GetSubLessonsBySectionId(lessonSectionId);
-            SubLessons.Clear();
-            foreach (var subLesson in subLessons)
-            {
-                SubLessons.Add(subLesson);
-            }
-        }
 
-        public async Task OnLessonSectionClicked(int lessonSectionId)
+        public async Task LoadSections(int lessonId)
         {
-            var subLessons = await _lessonService.GetSubLessonsAsync(lessonSectionId);
-            if (SubLessons != null)
+            var sections = await _lessonService.GetSectionsByLessonId(lessonId);
+            LessonSections.Clear();
+            foreach (var section in sections)
             {
-                SubLessons.Clear();
-            }
-            foreach (var subLesson in subLessons)
-            {
-                SubLessons.Add(subLesson);
+                LessonSections.Add(section);
             }
         }
     }

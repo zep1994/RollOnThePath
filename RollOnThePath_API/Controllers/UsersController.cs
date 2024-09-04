@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using RollOnThePath_API.Data;
-using RollOnThePath_API.Models;
 using RollOnThePath_API.Models.Users;
-using RollOnThePath_API.Services;
 using RollOnThePath_API.Services.Users;
 using System.Security.Claims;
 

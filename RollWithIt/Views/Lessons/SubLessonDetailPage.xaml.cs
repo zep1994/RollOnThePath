@@ -1,6 +1,5 @@
 using RollWithIt.Models.Lessons;
 using RollWithIt.ViewModels;
-using Microsoft.Maui.Controls;
 
 namespace RollWithIt.Views.Lessons
 {

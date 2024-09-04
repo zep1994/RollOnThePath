@@ -138,7 +138,6 @@ namespace RollWithIt.Services.Lesson
             }
         }
 
-
         private static string? GetUserIdFromToken(string jwtToken)
         {
             try
@@ -202,6 +201,44 @@ namespace RollWithIt.Services.Lesson
             }
 
             return subLessons;
+        }
+
+
+        public async Task<List<LessonSection>> GetSectionsByLessonId(int lessonId)
+        {
+            var jwtToken = App.JWTToken;
+            if (jwtToken == null) { throw new ArgumentNullException(nameof(jwtToken)); }
+            if (string.IsNullOrEmpty(jwtToken))
+            {
+                throw new ArgumentNullException(nameof(jwtToken), "JWT token cannot be null or empty");
+            }
+
+            // Set JWT token in the request header
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+
+            // Define the API endpoint to fetch sublessons for a given lesson section
+            var response = await _httpClient.GetAsync($"{_baseUrl}/api/lessons/{lessonId}/sections");
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Failed to fetch sublessons. Status Code: {response.StatusCode}");
+                return [];
+            }
+
+            var content = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            // Deserialize the response content into a list of SubLesson objects
+            var sections = JsonSerializer.Deserialize<List<LessonSection>>(content, options);
+            if (sections == null)
+            {
+                Console.WriteLine("Deserialization of sublessons returned null.");
+                return new List<LessonSection>();
+            }
+
+            return sections;
         }
     }
 }

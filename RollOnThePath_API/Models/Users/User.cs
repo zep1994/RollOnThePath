@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Security.Cryptography;
 using RollOnThePath_API.Models.Jujitsu;
 using RollOnThePath_API.Models.Lessons;
 

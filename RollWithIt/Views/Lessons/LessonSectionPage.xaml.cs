@@ -7,31 +7,16 @@ public partial class LessonSectionPage : ContentPage
 {
     private LessonSectionViewModel _viewModel;
 
-    public LessonSectionPage(LessonSection lessonSection)
+    public LessonSectionPage(Lesson lesson)
     {
         InitializeComponent();
-
-        // Create an instance of the view model
-        _viewModel = new LessonSectionViewModel
-        {
-            // Set the LessonSection property
-            LessonSection = lessonSection
-        };
-
-        // Set the BindingContext
+        _viewModel = new LessonSectionViewModel();
         BindingContext = _viewModel;
-
-        // Load sublessons
-        LoadSubLessonsAsync(lessonSection.Id);
+        _viewModel.Lesson = lesson;
+        _ = _viewModel.LoadSections(lesson.Id);
     }
 
-    private async void LoadSubLessonsAsync(int lessonSectionId)
-    {
-        // Call LoadSubLessons on the ViewModel
-        await _viewModel.LoadSubLessons(lessonSectionId);
-    }
-
-    private async void OnLessonSectionClicked(object sender, EventArgs e)
+    private async void OnSectionClicked(object sender, EventArgs e)
     {
         if (sender is Button button && button.BindingContext is SubLesson sublesson)
         {

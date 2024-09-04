@@ -1,7 +1,5 @@
 using System.Net.Http.Headers;
-using System.Net.Http;
 using System.Text.Json;
-using RollWithIt.Services;
 using RollWithIt.Models.Users;
 
 namespace RollWithIt.Views.Users;

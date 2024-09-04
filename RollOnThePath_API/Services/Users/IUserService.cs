@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using RollOnThePath_API.Models.Users;
+﻿using RollOnThePath_API.Models.Users;
 
 namespace RollOnThePath_API.Services.Users
 {

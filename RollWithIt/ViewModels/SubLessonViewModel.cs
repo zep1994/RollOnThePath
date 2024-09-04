@@ -1,6 +1,5 @@
 ﻿using MvvmHelpers;
 using RollWithIt.Models.Lessons;
-using System.Threading.Tasks;
 
 namespace RollWithIt.ViewModels
 {

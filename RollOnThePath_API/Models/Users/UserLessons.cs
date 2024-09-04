@@ -1,5 +1,4 @@
 ﻿using RollOnThePath_API.Models.Lessons;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RollOnThePath_API.Models.Users

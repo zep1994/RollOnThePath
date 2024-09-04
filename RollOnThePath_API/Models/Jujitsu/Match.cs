@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using RollOnThePath_API.Models.Users;
+﻿using RollOnThePath_API.Models.Users;
 
 namespace RollOnThePath_API.Models.Jujitsu
 {

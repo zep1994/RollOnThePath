@@ -31,7 +31,7 @@ public partial class LessonsPage : ContentPage
 
             // Set the selected lesson before navigating
             _viewModel.SelectedLesson = lesson;
-            await Navigation.PushAsync(new LessonShowPage(lesson));
+            await Navigation.PushAsync(new LessonSectionPage(lesson));
         }
         else
         {
