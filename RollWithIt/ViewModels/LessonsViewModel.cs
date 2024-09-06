@@ -26,7 +26,7 @@ namespace RollWithIt.ViewModels
 
         public LessonsViewModel()
         {
-            Lessons = new ObservableCollection<Lesson>();
+            Lessons = [];
         }
 
         public async Task LoadLessonsAsync()

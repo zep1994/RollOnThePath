@@ -12,23 +12,22 @@ public partial class LessonSectionPage : ContentPage
         InitializeComponent();
         _viewModel = new LessonSectionViewModel();
         BindingContext = _viewModel;
-        _viewModel.Lesson = lesson;
-        _ = _viewModel.LoadSections(lesson.Id);
+        _viewModel.LoadSections(lesson.Id); // Ensuring the ViewModel loads the appropriate sections
     }
 
     private async void OnSectionClicked(object sender, EventArgs e)
     {
-        if (sender is Button button && button.BindingContext is SubLesson sublesson)
+        if (sender is Button { BindingContext: LessonSection section })
         {
-            Console.WriteLine("Lesson button clicked. Navigating to LessonShowPage...");
+            Console.WriteLine("Section button clicked. Navigating to SubLessonDetailPage...");
 
-            // Set the selected lesson before navigating
-            _viewModel.SelectedSubLesson = sublesson;
-            await Navigation.PushAsync(new SubLessonDetailPage(sublesson));
+            // Navigate to SubLessonDetailPage with the selected section ID
+            _viewModel.SelectedSection = section;
+            await Navigation.PushAsync(new SubLessonDetailPage(section));
         }
         else
         {
-            Console.WriteLine("Lesson button click event handler triggered, but lesson object is null or not correctly bound.");
+            Console.WriteLine("Section button click event handler triggered, but section object is null or not correctly bound.");
         }
     }
 }

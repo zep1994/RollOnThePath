@@ -140,6 +140,22 @@ namespace RollOnThePath_API.Services.Lesson
             }
 
         }
+        public async Task<List<SubLesson>> GetSubLessonsBySectionId(int sectionId)
+        {
+            try
+            {
+                // Retrieve all SubLessons associated with a given LessonSection ID
+                return await _dbContext.SubLessons
+                                       .Where(sl => sl.LessonSectionId == sectionId)
+                                       .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while fetching SubLessons for section ID {sectionId}: {ex.Message}");
+                throw;
+            }
+        }
+
 
         public async Task<List<Models.Lessons.Lesson>> GetAllLessonsMatchingBelt(string beltColor)
         {

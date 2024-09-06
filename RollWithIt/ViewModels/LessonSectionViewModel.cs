@@ -7,7 +7,7 @@ namespace RollWithIt.ViewModels
 {
     public class LessonSectionViewModel : BaseViewModel
     {
-        private ObservableCollection<LessonSection> _lessonSections = new ObservableCollection<LessonSection>();
+        private ObservableCollection<LessonSection> _lessonSections = [];
         public ObservableCollection<LessonSection> LessonSections
         {
             get => _lessonSections;
@@ -16,23 +16,16 @@ namespace RollWithIt.ViewModels
 
         private readonly LessonService _lessonService = new();
 
-        private Lesson _lesson;
-        public Lesson Lesson
+        private LessonSection? _selectedSection;
+        public LessonSection? SelectedSection
         {
-            get => _lesson;
-            set => SetProperty(ref _lesson, value);
-        }
-
-        private SubLesson? _selectedSubLesson;
-        public SubLesson? SelectedSubLesson
-        {
-            get => _selectedSubLesson;
-            set => SetProperty(ref _selectedSubLesson, value);
+            get => _selectedSection;
+            set => SetProperty(ref _selectedSection, value);
         }
 
         public LessonSectionViewModel()
         {
-            _lessonSections = new ObservableCollection<LessonSection>();
+            LessonSections = [];
         }
 
 
@@ -42,6 +35,7 @@ namespace RollWithIt.ViewModels
             LessonSections.Clear();
             foreach (var section in sections)
             {
+                Console.WriteLine($"Loading Section: {section.Title}, ID: {section.Id}"); // Debugging log to verify the correct ID
                 LessonSections.Add(section);
             }
         }

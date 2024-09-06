@@ -179,7 +179,7 @@ namespace RollWithIt.Services.Lesson
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
             // Define the API endpoint to fetch sublessons for a given lesson section
-            var response = await _httpClient.GetAsync($"{_baseUrl}/api/lessonsections/{lessonSectionId}/sublessons");
+            var response = await _httpClient.GetAsync($"{_baseUrl}/api/lessons/{lessonSectionId}/sublessons");
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine($"Failed to fetch sublessons. Status Code: {response.StatusCode}");
