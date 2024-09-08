@@ -17,10 +17,7 @@ public partial class LessonsPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        if (BindingContext is LessonsViewModel viewModel)
-        {
-            await viewModel.LoadLessonsAsync();
-        }
+        await _viewModel.LoadLessonsAsync();
     }
 
     private async void OnLessonClicked(object sender, EventArgs e)

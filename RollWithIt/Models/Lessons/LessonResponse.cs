@@ -2,7 +2,7 @@
 
 namespace RollWithIt.Models.Lessons
 {
-    public class LessonResponse
+    public class LessonResponse<T>
     {
         [JsonPropertyName("$id")]
         public string? Id { get; set; }

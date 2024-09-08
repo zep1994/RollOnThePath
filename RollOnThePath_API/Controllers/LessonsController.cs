@@ -40,6 +40,10 @@ namespace RollOnThePath_API.Controllers
 
                 // Fetch lessons matching the user's belt color
                 var lessons = await _lessonService.GetAllLessonsMatchingBelt(beltColor);
+                if (lessons == null || !lessons.Any())
+                {
+                    return NotFound("No lessons found.");
+                }
 
                 return Ok(lessons);
             }

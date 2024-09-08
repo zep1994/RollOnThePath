@@ -16,7 +16,7 @@ public class Lesson
     public string Difficulty { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 
-
+    public int UserId { get; set; }
     // Navigation property for LessonSections
     public List<LessonSection>? LessonSections { get; set; }
 

@@ -140,6 +140,7 @@ namespace RollOnThePath_API.Services.Lesson
             }
 
         }
+
         public async Task<List<SubLesson>> GetSubLessonsBySectionId(int sectionId)
         {
             try
@@ -156,12 +157,12 @@ namespace RollOnThePath_API.Services.Lesson
             }
         }
 
-
         public async Task<List<Models.Lessons.Lesson>> GetAllLessonsMatchingBelt(string beltColor)
         {
-            return await _dbContext.Lessons
+            var lessons =  await _dbContext.Lessons
                                  .Where(l => l.Belt == beltColor)
                                  .ToListAsync();
+            return lessons;
         }
 
         public async Task<List<SubLesson>> GetSubLessonsAsync(int lessonSectionId)

@@ -16,11 +16,7 @@ namespace RollWithIt.Services.Lesson
         {
             var jwtToken = App.JWTToken;
             if (jwtToken == null) { throw new ArgumentNullException(nameof(jwtToken)); }
-            // Ensure JWT token is provided
-            if (string.IsNullOrEmpty(jwtToken))
-            {
-                throw new ArgumentNullException(nameof(jwtToken), "JWT token cannot be null or empty");
-            }
+
             // Set JWT token in the request header
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
@@ -37,16 +33,19 @@ namespace RollWithIt.Services.Lesson
                 PropertyNameCaseInsensitive = true
             };
 
-            LessonResponse? lessonResponse = JsonSerializer.Deserialize<LessonResponse>(content, options);
-            List<Models.Lessons.Lesson>? lessons = lessonResponse?.Values;
-
-            if (lessons == null || lessons.Count == 0)
+            try
             {
-                return null;
+                var apiResponse = JsonSerializer.Deserialize<LessonResponse<Models.Lessons.Lesson>>(content, options);
+                return apiResponse?.Values; // Return the lessons from the wrapper
             }
-
-            return lessons;
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"Deserialization error: {ex.Message}");
+                throw;
+            }
         }
+
+
 
 
         public async Task<List<Models.Lessons.Lesson>?> GetUserLessonsAsync()
@@ -202,7 +201,6 @@ namespace RollWithIt.Services.Lesson
 
             return subLessons;
         }
-
 
         public async Task<List<LessonSection>> GetSectionsByLessonId(int lessonId)
         {

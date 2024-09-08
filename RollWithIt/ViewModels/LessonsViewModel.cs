@@ -9,8 +9,8 @@ namespace RollWithIt.ViewModels
     {
         private readonly LessonService _lessonService = new();
 
-        private ObservableCollection<Lesson>? _lessons;
-        public ObservableCollection<Lesson>? Lessons
+        private ObservableCollection<Lesson> _lessons;
+        public ObservableCollection<Lesson> Lessons
         {
             get => _lessons;
             set => SetProperty(ref _lessons, value);
@@ -31,11 +31,8 @@ namespace RollWithIt.ViewModels
 
         public async Task LoadLessonsAsync()
         {
-                                                                                                                                                                                                                                                            var lessons = await _lessonService.GetAllLessons();
-            if (Lessons != null)
-            {
-                Lessons.Clear();
-            }
+            var lessons = await _lessonService.GetAllLessons();
+            Lessons.Clear();
             foreach (var lesson in lessons)
             {
                 Lessons.Add(lesson);
