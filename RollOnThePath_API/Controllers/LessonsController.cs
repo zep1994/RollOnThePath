@@ -143,6 +143,10 @@ namespace RollOnThePath_API.Controllers
             try
             {
                 var subLessons = await _lessonService.GetSubLessonsAsync(lessonSectionId);
+                if (subLessons == null || subLessons.Count == 0)
+                {
+                    return NotFound($"No sublessons found for section ID: {lessonSectionId}");
+                }
                 // Configure JSON serializer settings
                 var serializerSettings = new JsonSerializerSettings
                 {

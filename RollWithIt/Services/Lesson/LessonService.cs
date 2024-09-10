@@ -111,32 +111,6 @@ namespace RollWithIt.Services.Lesson
             }
         }
 
-        public async Task<List<SubLesson>> GetSubLessonsAsync(int lessonSectionId)
-        {
-            var jwtToken = App.JWTToken;
-            if (jwtToken == null) { throw new ArgumentNullException(nameof(jwtToken)); }
-            // Ensure JWT token is provided
-            if (string.IsNullOrEmpty(jwtToken))
-            {
-                throw new ArgumentNullException(nameof(jwtToken), "JWT token cannot be null or empty");
-            }
-
-            // Set JWT token in the request header
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-
-            var response = await _httpClient.GetAsync($"{_baseUrl}/api/lessonsections/{lessonSectionId}/sublessons");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<List<SubLesson>>(content);
-            }
-            else
-            {
-                // Handle unsuccessful response
-                return new List<SubLesson>();
-            }
-        }
-
         private static string? GetUserIdFromToken(string jwtToken)
         {
             try
@@ -179,27 +153,18 @@ namespace RollWithIt.Services.Lesson
 
             // Define the API endpoint to fetch sublessons for a given lesson section
             var response = await _httpClient.GetAsync($"{_baseUrl}/api/lessons/{lessonSectionId}/sublessons");
-            if (!response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine($"Failed to fetch sublessons. Status Code: {response.StatusCode}");
-                return new List<SubLesson>();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<SubLesson>>(content, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
             }
-
-            var content = await response.Content.ReadAsStringAsync();
-            var options = new JsonSerializerOptions
+            else
             {
-                PropertyNameCaseInsensitive = true
-            };
-
-            // Deserialize the response content into a list of SubLesson objects
-            var subLessons = JsonSerializer.Deserialize<List<SubLesson>>(content, options);
-            if (subLessons == null)
-            {
-                Console.WriteLine("Deserialization of sublessons returned null.");
-                return new List<SubLesson>();
+                return [];
             }
-
-            return subLessons;
         }
 
         public async Task<List<LessonSection>> GetSectionsByLessonId(int lessonId)

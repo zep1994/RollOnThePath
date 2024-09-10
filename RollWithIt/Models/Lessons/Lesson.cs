@@ -13,14 +13,8 @@ namespace RollWithIt.Models.Lessons
         [JsonPropertyName("title")] // Ensure this matches the JSON response
         public string Title { get; set; } = string.Empty;
 
-        [JsonPropertyName("userId")]
-        public int UserId { get; set; }
-
         [JsonPropertyName("lessonSections")]
         public List<LessonSection>? LessonSections { get; set; }
-
-        [JsonPropertyName("userLessons")]
-        public ICollection<UserLessons>? UserLessons { get; set; }
     }
 
 }
