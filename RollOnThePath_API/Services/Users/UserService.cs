@@ -2,10 +2,6 @@
 using Newtonsoft.Json;
 using RollOnThePath_API.Data;
 using RollOnThePath_API.Models.Users;
-using System;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace RollOnThePath_API.Services.Users
 {

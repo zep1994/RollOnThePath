@@ -7,45 +7,36 @@ namespace RollWithIt.ViewModels
 {
     public class LessonSectionViewModel : BaseViewModel
     {
-        private LessonSection? _lessonSection;
-        public LessonSection? LessonSection
+        private ObservableCollection<LessonSection> _lessonSections = [];
+        public ObservableCollection<LessonSection> LessonSections
         {
-            get => _lessonSection;
-            set => SetProperty(ref _lessonSection, value);
+            get => _lessonSections;
+            set => SetProperty(ref _lessonSections, value);
         }
 
         private readonly LessonService _lessonService = new();
 
-        private ObservableCollection<SubLesson>? _subLessons;
-        public ObservableCollection<SubLesson>? SubLessons
+        private LessonSection? _selectedSection;
+        public LessonSection? SelectedSection
         {
-            get => _subLessons;
-            set => SetProperty(ref _subLessons, value);
-        }
-
-        // Property to store the selected lesson
-        private SubLesson? _selectedSubLesson;
-        public SubLesson? SelectedSubLesson
-        {
-            get => _selectedSubLesson;
-            set => SetProperty(ref _selectedSubLesson, value);
+            get => _selectedSection;
+            set => SetProperty(ref _selectedSection, value);
         }
 
         public LessonSectionViewModel()
         {
-            SubLessons = new ObservableCollection<SubLesson>();
+            LessonSections = [];
         }
 
-        public async Task LoadSubLessons(string lessonSectionId)
+
+        public async Task LoadSections(int lessonId)
         {
-            var subLessons = await _lessonService.GetSubLessonsAsync(lessonSectionId);
-            if (SubLessons != null)
+            var sections = await _lessonService.GetSectionsByLessonId(lessonId);
+            LessonSections.Clear();
+            foreach (var section in sections)
             {
-                SubLessons.Clear();
-            }
-            foreach (var subLesson in subLessons)
-            {
-                SubLessons.Add(subLesson);
+                Console.WriteLine($"Loading Section: {section.Title}, ID: {section.Id}"); // Debugging log to verify the correct ID
+                LessonSections.Add(section);
             }
         }
     }

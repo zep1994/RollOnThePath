@@ -6,5 +6,7 @@ namespace RollWithIt.Services.Lesson
     {
         Task<List<Models.Lessons.Lesson>?> GetUserLessonsAsync();
         Task<List<LessonSection>?> GetLessonSectionsAsync(string lessonId);
+        Task<List<LessonSection>> GetSectionsByLessonId(int lessonId);
+        Task<List<Models.Lessons.Lesson>?> GetAllLessons();
     }
 }

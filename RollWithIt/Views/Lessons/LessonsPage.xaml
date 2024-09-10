@@ -30,7 +30,7 @@
                             <Button Text="View Lesson"
                                 Clicked="OnLessonClicked"
                                 CornerRadius="10"
-                                CommandParameter="{Binding}"/>
+                                CommandParameter="{Binding .}"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

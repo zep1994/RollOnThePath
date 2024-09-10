@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RollWithIt.Models.Users;
+﻿using RollWithIt.Models.Users;
 
 namespace RollWithIt.Services.User
 {

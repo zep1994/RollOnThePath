@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RollOnThePath_API.Models.Lessons;
 using RollOnThePath_API.Services.Lesson;
+using System.Security.Claims;
 
 namespace RollOnThePath_API.Controllers
 {
@@ -21,7 +21,30 @@ namespace RollOnThePath_API.Controllers
         {
             try
             {
-                var lessons = await _lessonService.GetAllLessons();
+                // Retrieve the username from the claims
+                var id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                if (id == null)
+                {
+                    return Unauthorized("User is not authenticated.");
+                }
+
+                // Fetch the user to get the belt color
+                var user = await _lessonService.GetUserById(id);
+                if (user == null)
+                {
+                    return NotFound("User not found.");
+                }
+
+                // Assuming the belt color is stored directly in the User model
+                var beltColor = user.BeltRank;
+
+                // Fetch lessons matching the user's belt color
+                var lessons = await _lessonService.GetAllLessonsMatchingBelt(beltColor);
+                if (lessons == null || !lessons.Any())
+                {
+                    return NotFound("No lessons found.");
+                }
+
                 return Ok(lessons);
             }
             catch (Exception ex)
@@ -120,6 +143,10 @@ namespace RollOnThePath_API.Controllers
             try
             {
                 var subLessons = await _lessonService.GetSubLessonsAsync(lessonSectionId);
+                if (subLessons == null || subLessons.Count == 0)
+                {
+                    return NotFound($"No sublessons found for section ID: {lessonSectionId}");
+                }
                 // Configure JSON serializer settings
                 var serializerSettings = new JsonSerializerSettings
                 {

@@ -1,6 +1,5 @@
 using RollWithIt.ViewModels;
 using RollWithIt.Models.Lessons;
-using RollWithIt.Services.Lesson;
 
 
 namespace RollWithIt.Views.Lessons
@@ -30,10 +29,10 @@ namespace RollWithIt.Views.Lessons
             }
         }
 
-        private async void OnViewSublessonsClicked(object sender, EventArgs e)
-        {
-            // Navigate to LessonSectionPage and pass the selected lesson section
-            await Navigation.PushAsync(new LessonSectionPage(_viewModel.SelectedSubLesson));
-        }
+        //private async void OnViewSublessonsClicked(object sender, EventArgs e)
+        //{
+        //    // Navigate to LessonSectionPage and pass the selected lesson section
+        //    await Navigation.PushAsync(new LessonSectionPage(_viewModel.SelectedSubLesson));
+        //}
     }
 }

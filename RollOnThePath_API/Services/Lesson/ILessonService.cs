@@ -1,4 +1,5 @@
 ﻿using RollOnThePath_API.Models.Lessons;
+using RollOnThePath_API.Models.Users;
 
 namespace RollOnThePath_API.Services.Lesson
 {
@@ -11,6 +12,8 @@ namespace RollOnThePath_API.Services.Lesson
         Task<List<LessonSection>> GetLessonSectionsAsync(int lessonId);
         Task<SubLesson> CreateSubLesson(int sectionId, SubLesson subLesson);
         Task<List<SubLesson>> GetSubLessonsAsync(int lessonSectionId);
+        Task<List<Models.Lessons.Lesson>> GetAllLessonsMatchingBelt(string beltColor);
+        Task<User> GetUserById(string id);
 
     }
 }

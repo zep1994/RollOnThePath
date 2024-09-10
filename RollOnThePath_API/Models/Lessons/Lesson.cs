@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using RollOnThePath_API.Models.Users;
 
 namespace RollOnThePath_API.Models.Lessons;
@@ -11,10 +10,12 @@ public class Lesson
     [Required]
     public string Title { get; set; } = string.Empty;
 
-    // Navigation property for LessonSections
-    public List<LessonSection>? LessonSections { get; set; }
+    public string Belt { get; set; } = string.Empty;
+    public string Category { get; set; } = string.Empty;
+    public string Difficulty { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
 
-    // Navigation property for the many-to-many relationship with users
+    public List<LessonSection>? LessonSections { get; set; }
     public ICollection<UserLessons>? UserLessons { get; set; }
 
 }

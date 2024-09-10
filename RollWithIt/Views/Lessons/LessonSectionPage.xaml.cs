@@ -5,31 +5,29 @@ namespace RollWithIt.Views.Lessons;
 
 public partial class LessonSectionPage : ContentPage
 {
-    public LessonSectionPage(LessonSection lessonSection)
+    private LessonSectionViewModel _viewModel;
+
+    public LessonSectionPage(Lesson lesson)
     {
         InitializeComponent();
-
-        // Create an instance of the view model
-        var viewModel = new LessonSectionViewModel
-        {
-            // Set the LessonSection property
-            LessonSection = lessonSection
-        };
-
-        // Set the BindingContext
-        BindingContext = viewModel;
-
-        // Load sublessons
-        _ = LoadSubLessonsAsync(lessonSection.Id.ToString());
+        _viewModel = new LessonSectionViewModel();
+        BindingContext = _viewModel;
+        _viewModel.LoadSections(lesson.Id); // Ensuring the ViewModel loads the appropriate sections
     }
 
-    private async Task LoadSubLessonsAsync(string lessonSectionId)
+    private async void OnSectionClicked(object sender, EventArgs e)
     {
-        // Retrieve the view model from the BindingContext
-        if (BindingContext is LessonSectionViewModel viewModel)
+        if (sender is Button { BindingContext: LessonSection section })
         {
-            // Load sublessons asynchronously
-            await viewModel.LoadSubLessons(lessonSectionId);
+            Console.WriteLine("Section button clicked. Navigating to SubLessonDetailPage...");
+
+            // Navigate to SubLessonDetailPage with the selected section ID
+            _viewModel.SelectedSection = section;
+            await Navigation.PushAsync(new SubLessonDetailPage(section));
+        }
+        else
+        {
+            Console.WriteLine("Section button click event handler triggered, but section object is null or not correctly bound.");
         }
     }
 }

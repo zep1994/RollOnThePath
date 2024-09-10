@@ -1,4 +1,4 @@
-﻿using MvvmHelpers;
+using MvvmHelpers;
 using RollWithIt.Models.Lessons;
 using RollWithIt.Services.Lesson;
 using System.Collections.ObjectModel;
@@ -9,8 +9,8 @@ namespace RollWithIt.ViewModels
     {
         private readonly LessonService _lessonService = new();
 
-        private ObservableCollection<Lesson>? _lessons;
-        public ObservableCollection<Lesson>? Lessons
+        private ObservableCollection<Lesson> _lessons;
+        public ObservableCollection<Lesson> Lessons
         {
             get => _lessons;
             set => SetProperty(ref _lessons, value);
@@ -26,29 +26,17 @@ namespace RollWithIt.ViewModels
 
         public LessonsViewModel()
         {
-            Lessons = new ObservableCollection<Lesson>();
+            Lessons = [];
         }
 
         public async Task LoadLessonsAsync()
         {
             var lessons = await _lessonService.GetAllLessons();
-            if (lessons == null || lessons.Count == 0)
-            {
-                Console.WriteLine("No lessons found or an error occurred.");
-                return;
-            }
-
-            if (Lessons != null)
-            {
-                Lessons.Clear();
-            }
+            Lessons.Clear();
             foreach (var lesson in lessons)
             {
                 Lessons.Add(lesson);
             }
-
-            Console.WriteLine($"Loaded {Lessons.Count} lessons.");
         }
-
     }
 }

@@ -1,7 +1,3 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using RollOnThePath_API;
-
 namespace RollOnThePath_API
 {
     public class Program
