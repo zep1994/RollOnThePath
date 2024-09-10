@@ -1,4 +1,4 @@
-﻿using MvvmHelpers;
+using MvvmHelpers;
 using RollWithIt.Models.Lessons;
 using RollWithIt.Services.Lesson;
 using System.Collections.ObjectModel;
