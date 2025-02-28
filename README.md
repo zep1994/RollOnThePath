@@ -123,6 +123,5 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 **Thomas Matlock**  
 📧 Email: [thomasmatlockbba@gmail.com](mailto:thomasmatlockbba@gmail.com)  
-📞 Phone: (601) 812-8079  
 🔗 LinkedIn: [linkedin.com/in/tmatlockCISA](https://linkedin.com/in/tmatlockCISA)  
 📂 Portfolio: [thomas-matlock.onrender.com](https://thomas-matlock.onrender.com)
