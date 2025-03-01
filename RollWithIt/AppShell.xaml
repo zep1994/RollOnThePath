@@ -10,7 +10,7 @@
     xmlns:viewModels="clr-namespace:RollWithIt.ViewModels"
     x:DataType="viewModels:AppShellViewModel"
     Shell.FlyoutBehavior="Flyout"
-    Title="RollWithIt">
+    Title="Roll With It">
 
     <Shell.Resources>
         <Style x:Key="BaseStyle"
